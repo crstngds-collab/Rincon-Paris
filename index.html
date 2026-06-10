@@ -527,7 +527,7 @@ function renderForm(){
   }
   html+="</div>";
 
-  html+="<div class='fld'><label>Notas adicionales (opcional)</label><textarea id='f-notes' rows='3' placeholder='Preferencia de horario, indicaciones especiales...'>"+fd.notes+"</textarea></div>";
+  html+="<div class='fld'><label>&#128221; Notas adicionales (opcional)</label><textarea id='f-notes' rows='3' placeholder='Preferencia de horario, indicaciones especiales...'>"+fd.notes+"</textarea></div>";
   html+="<div class='mfooter'><button class='cancel-btn' onclick='closeCheckout()'>Cancelar</button><button class='ok-btn' onclick='doConfirm()'>Confirmar pedido</button></div>";
 
   qs("co-body").innerHTML = html;
