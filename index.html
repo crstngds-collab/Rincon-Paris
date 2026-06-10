@@ -1,30 +1,245 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rincón París</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: Jost, sans-serif; background: #fdf9f5; }
-    #loading { position:fixed;inset:0;background:#fdf9f5;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:9999; }
-    #loading p { font-family:Jost,sans-serif;color:#b8860b;font-size:14px;letter-spacing:3px;text-transform:uppercase; }
-    #error { position:fixed;inset:0;background:#fff;display:none;align-items:center;justify-content:center;flex-direction:column;z-index:9999;padding:20px;text-align:center; }
-    #error p { color:#c0392b;font-family:Jost,sans-serif;font-size:14px;margin-top:10px; }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Rincón París - Perfumes Amakha</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Jost,sans-serif;background:#fdf9f5}
+.topbar{background:#1a1a1a;color:#d4b896;text-align:center;padding:7px;font-size:11px;letter-spacing:2px}
+header{background:#fff;border-bottom:1px solid #f0e8dc;position:sticky;top:0;z-index:200}
+.hdr{max-width:1280px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:64px}
+.hdr-left{display:flex;align-items:center;gap:10px}
+.hdr-logo{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #f0e8dc}
+.brand h1{font-family:"Playfair Display",serif;font-size:20px;color:#1a1a1a;letter-spacing:2px}
+.brand p{color:#b8860b;font-size:8px;letter-spacing:3px;text-transform:uppercase}
+.hdr-right{display:flex;gap:8px;align-items:center}
+#search{background:#faf6f1;border:1.5px solid #e8ddd0;border-radius:7px;padding:7px 12px;font-family:Jost,sans-serif;font-size:12px;outline:none;width:130px}
+#cart-btn{background:#1a1a1a;color:#fff;border:none;padding:8px 14px;border-radius:7px;cursor:pointer;font-size:18px;display:flex;align-items:center;gap:6px}
+.badge-count{background:#b8860b;color:#fff;border-radius:20px;padding:1px 7px;font-size:11px;font-weight:700;display:none}
+.hero{background:#0a0a0a;padding:60px 24px 50px;text-align:center}
+.hero-logo{width:240px;height:240px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 24px}
+.hero-sub{color:#b8860b;font-size:11px;letter-spacing:5px;text-transform:uppercase;margin-bottom:14px}
+.hero-title{color:#fff;font-family:"Playfair Display",serif;font-size:22px;line-height:1.3;margin-bottom:12px}
+.hero-desc{color:#aaa;font-size:14px;max-width:420px;margin:0 auto 26px;line-height:1.8}
+.hero-btn{background:#b8860b;color:#fff;border:none;padding:13px 30px;border-radius:8px;cursor:pointer;font-family:Jost,sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase}
+.cats{background:#fff;border-bottom:1px solid #f0e8dc;overflow-x:auto}
+.cats-inner{max-width:1280px;margin:0 auto;padding:0 22px;display:flex}
+.cat-btn{padding:14px;background:transparent;border:none;border-bottom:2.5px solid transparent;color:#888;font-family:Jost,sans-serif;font-size:12px;cursor:pointer;white-space:nowrap;transition:color .2s}
+.cat-btn.active{border-bottom-color:#1a1a1a;color:#1a1a1a;font-weight:700}
+.cat-btn.consult-tab{color:#888}
+.cat-btn.consult-tab.active{border-bottom-color:#25D366;color:#25D366;font-weight:700}
+.main{max-width:1280px;margin:0 auto;padding:32px 22px}
+.sort-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px}
+.sort-row h3{font-family:"Playfair Display",serif;font-size:20px;color:#1a1a1a}
+.sort-row p{color:#999;font-family:Jost,sans-serif;font-size:12px}
+select{background:#fff;border:1.5px solid #e8ddd0;border-radius:7px;padding:8px 12px;color:#666;font-family:Jost,sans-serif;font-size:12px;outline:none;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+.card{background:#fff;border-radius:12px;overflow:hidden;border:1px solid #f0e8dc;box-shadow:0 2px 10px rgba(0,0,0,.06);display:flex;flex-direction:column;position:relative}
+.card-badge{position:absolute;top:10px;left:10px;z-index:2;color:#fff;font-size:10px;font-family:Jost,sans-serif;font-weight:700;letter-spacing:1.5px;padding:3px 9px;border-radius:4px}
+.card-img{background:#faf6f1;height:220px;display:flex;align-items:center;justify-content:center}
+.card-img img{max-width:90%;max-height:90%;object-fit:contain}
+.card-body{padding:16px 16px 12px;flex:1;display:flex;flex-direction:column;gap:4px}
+.card-cat{background:#faf0e6;color:#8B6914;font-size:10px;font-family:Jost,sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:3px;align-self:flex-start}
+.card-name{color:#1a1a1a;font-family:"Playfair Display",serif;font-size:17px;font-weight:700;margin:6px 0 0;line-height:1.3}
+.card-sub{color:#b8860b;font-size:12px;font-style:italic}
+.card-price{display:flex;align-items:baseline;gap:8px;margin-top:10px}
+.card-price .price{color:#1a1a1a;font-family:"Playfair Display",serif;font-size:20px;font-weight:700}
+.card-price .size{color:#aaa;font-size:11px}
+.card-foot{padding:0 16px 16px}
+.add-btn{width:100%;padding:10px 0;background:transparent;color:#1a1a1a;border:1.5px solid #1a1a1a;border-radius:7px;cursor:pointer;font-family:Jost,sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+.consult-section{max-width:700px;margin:40px auto;padding:0 24px}
+.consult-box{background:#fff;border-radius:16px;padding:48px 32px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.07);border:1px solid #f0e8dc}
+.consult-logo{width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid #f0e8dc;margin:0 auto 16px;display:block}
+.consult-box h2{font-family:"Playfair Display",serif;font-size:28px;color:#1a1a1a;margin-bottom:12px}
+.consult-box p{font-family:Jost,sans-serif;font-size:15px;color:#777;line-height:1.8;max-width:380px;margin:0 auto 32px}
+.wa-cta{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:16px 36px;border-radius:10px;font-family:Jost,sans-serif;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 4px 16px rgba(37,211,102,.35)}
+.consult-num{font-family:Jost,sans-serif;font-size:13px;color:#aaa;margin-top:20px}
+.footer-bar{background:#1a1a1a;padding:28px 24px;margin-top:16px}
+.footer-bar-inner{max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-around;gap:20px;text-align:center}
+.footer-item p:first-child{color:#fff;font-family:Jost,sans-serif;font-weight:600;font-size:12px;margin-bottom:3px}
+.footer-item p:last-child{color:#777;font-size:11px}
+footer{background:#111;padding:24px;text-align:center}
+.foot-inner{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}
+.foot-logo{width:36px;height:36px;border-radius:50%;object-fit:cover;opacity:.8}
+.foot-name{font-family:"Playfair Display",serif;font-size:16px;color:#d4b896}
+footer small{color:#555;font-size:10px;letter-spacing:2px}
+.wa-float{position:fixed;bottom:24px;right:24px;z-index:500;background:#25D366;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);font-size:24px;text-decoration:none}
+/* Overlay */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:800;display:none}
+.overlay.open{display:block}
+/* Drawer */
+.drawer{position:fixed;top:0;right:0;width:340px;height:100vh;background:#fff;z-index:900;display:flex;flex-direction:column;box-shadow:-4px 0 30px rgba(0,0,0,.12);transform:translateX(100%);transition:transform .3s}
+.drawer.open{transform:none}
+.drw-head{padding:20px 22px;border-bottom:1px solid #f0e8dc;display:flex;justify-content:space-between;align-items:center}
+.drw-head h2{font-family:"Playfair Display",serif;font-size:21px;color:#1a1a1a}
+.drw-close{background:none;border:none;font-size:22px;cursor:pointer;color:#999}
+.drw-body{flex:1;overflow-y:auto;padding:14px 22px;-webkit-overflow-scrolling:touch}
+.drw-empty{text-align:center;margin-top:60px;color:#ccc;font-size:14px}
+.drw-item{display:flex;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f5f0ea;align-items:center}
+.drw-img{width:52px;height:52px;border-radius:8px;background:#faf6f1;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.drw-img img{max-width:90%;max-height:90%;object-fit:contain}
+.drw-info{flex:1;min-width:0}
+.drw-info p{font-family:"Playfair Display",serif;font-size:13px;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.drw-info span{color:#b8860b;font-size:12px;font-family:Jost,sans-serif}
+.drw-ctrl{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.ctrl-btn{background:#f5f0ea;border:none;color:#555;width:26px;height:26px;border-radius:4px;cursor:pointer;font-size:16px}
+.ctrl-del{color:#e74c3c}
+.drw-foot{padding:18px 22px;border-top:1px solid #f0e8dc}
+.drw-total{display:flex;justify-content:space-between;margin-bottom:14px;align-items:center}
+.drw-total span:first-child{color:#555;font-family:Jost,sans-serif}
+.drw-total .amount{font-family:"Playfair Display",serif;font-size:22px;font-weight:700;color:#1a1a1a}
+.go-btn{width:100%;padding:13px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:Jost,sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase}
+.ship-note{text-align:center;color:#bbb;font-size:11px;font-family:Jost,sans-serif;margin-top:8px}
+/* Modal */
+.modal-wrap{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.modal-wrap.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:24px;width:100%;max-width:480px;margin-top:10px}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.modal-head h2{font-family:"Playfair Display",serif;font-size:20px;color:#1a1a1a}
+.mclose{background:none;border:none;font-size:22px;cursor:pointer;color:#999}
+/* Form elements */
+.sum-box{background:#faf6f1;border-radius:10px;padding:14px;margin-bottom:18px}
+.sum-row{display:flex;justify-content:space-between;margin-bottom:4px;font-family:Jost,sans-serif;font-size:13px}
+.sum-row span:first-child{color:#555}
+.sum-row span:last-child{color:#b8860b;font-weight:600}
+.sum-gratis{color:#5a7a3a!important}
+.sum-total{border-top:1px solid #e8ddd0;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between}
+.sum-total span:first-child{font-family:Jost,sans-serif;font-weight:700;color:#1a1a1a}
+.sum-total .tot-amt{font-family:"Playfair Display",serif;font-size:18px;font-weight:700;color:#1a1a1a}
+.fld{margin-bottom:12px}
+.fld label{color:#888;font-family:Jost,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:5px}
+.fld input,.fld textarea{width:100%;background:#faf6f1;border:1.5px solid #e8ddd0;border-radius:7px;padding:10px 13px;color:#1a1a1a;font-family:Jost,sans-serif;font-size:14px;outline:none;box-sizing:border-box}
+.fld textarea{resize:none}
+.phone-row{display:flex}
+.phone-pfx{background:#f0ece6;border:1.5px solid #e8ddd0;border-right:none;border-radius:7px 0 0 7px;padding:10px 12px;font-family:Jost,sans-serif;font-size:14px;color:#555;white-space:nowrap;flex-shrink:0}
+.phone-in{border-radius:0 7px 7px 0!important;border-left:none!important;flex:1}
+.sel-row{display:flex;gap:10px;margin-bottom:12px}
+.sel-opt{flex:1;padding:14px 8px;border-radius:10px;cursor:pointer;text-align:center;border:1.5px solid #e8ddd0;background:#faf6f1;transition:all .2s;font-family:Jost,sans-serif}
+.sel-opt.on{border:2px solid #5a7a3a;background:#eef4e8}
+.sel-opt .ico{font-size:26px;margin-bottom:6px}
+.sel-opt .sname{font-weight:700;font-size:13px;color:#1a1a1a;margin:0 0 3px}
+.sel-opt .ssub{font-size:12px;color:#b8860b;font-weight:700}
+.sel-opt .snote{font-size:10px;color:#999}
+.pickup-box{background:#eef4e8;border-radius:8px;padding:8px 12px;border:1px solid #c0d8a8;margin-bottom:4px;font-family:Jost,sans-serif;font-size:12px;color:#3a6a2a}
+.pay-box{background:#fffde8;border-radius:12px;padding:16px;border:1px solid #e8ddb0;margin-top:12px}
+.pay-box p{font-family:Jost,sans-serif;font-size:13px;color:#555;margin-bottom:6px}
+.pay-box a{color:#b8860b;font-weight:700;font-size:14px;text-decoration:none;display:block;margin-bottom:12px}
+.pay-line{font-family:Jost,sans-serif;font-size:13px;color:#555;margin-bottom:3px}
+.pay-line strong{color:#b8860b}
+.pay-bold{font-family:Jost,sans-serif;font-weight:700;font-size:13px;color:#1a1a1a;margin:8px 0 4px}
+.pay-note{font-family:Jost,sans-serif;font-size:13px;color:#555;line-height:1.6;margin-top:10px;padding-top:10px;border-top:1px dashed #d4c870}
+.pay-note strong{color:#b8860b}
+.pdash{border-top:1px dashed #d4c870;margin:10px 0}
+.mfooter{display:flex;gap:10px;margin-top:18px}
+.cancel-btn{flex:1;padding:12px;background:transparent;border:1.5px solid #ddd;color:#888;border-radius:8px;cursor:pointer;font-family:Jost,sans-serif;font-weight:600}
+.ok-btn{flex:2;padding:12px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:Jost,sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase}
+/* Confirmation */
+.conf-logo{width:130px;height:130px;border-radius:50%;object-fit:cover;border:3px solid #f0e8dc;box-shadow:0 4px 24px rgba(0,0,0,.12);display:block;margin:0 auto 16px}
+.conf-title{font-family:"Playfair Display",serif;font-size:24px;color:#1a1a1a;text-align:center;margin-bottom:20px}
+.ibox{background:#faf6f1;border-radius:12px;padding:16px;margin-bottom:12px}
+.ibox-title{font-family:Jost,sans-serif;font-weight:700;font-size:11px;color:#b8860b;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.ibox-row{display:flex;justify-content:space-between;margin-bottom:5px}
+.ibox-row span:first-child{font-family:Jost,sans-serif;font-size:13px;color:#555}
+.ibox-row span:last-child{font-family:Jost,sans-serif;font-size:13px;color:#b8860b;font-weight:600}
+.ibox-total{border-top:1px solid #e8ddd0;margin-top:8px;padding-top:8px;display:flex;justify-content:space-between}
+.ibox-total span:first-child{font-family:Jost,sans-serif;font-weight:700;font-size:14px;color:#1a1a1a}
+.ibox-total span:last-child{font-family:"Playfair Display",serif;font-size:18px;font-weight:700;color:#1a1a1a}
+.gbox{background:#eef4e8;border-radius:12px;padding:16px;border:1px solid #c0d8a8;margin-bottom:16px}
+.gbox-title{font-family:Jost,sans-serif;font-weight:700;font-size:14px;color:#1a1a1a;margin-bottom:8px}
+.gline{font-family:Jost,sans-serif;font-size:13px;color:#444;margin-bottom:5px;line-height:1.6}
+.gdash{border-top:1px dashed #c0d8a8;margin:10px 0}
+.close-btn{width:100%;padding:13px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:Jost,sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase}
+</style>
 </head>
 <body>
-  <div id="loading"><p>Cargando Rincón París...</p></div>
-  <div id="error"><p id="errmsg"></p></div>
-  <div id="root"></div>
-
-  <script type="module">
-    try {
-      const React = (await import("https://esm.sh/react@18")).default;
-      const { createRoot } = await import("https://esm.sh/react-dom@18/client");
-      const { useState, useEffect } = React;
-
+<div class="topbar">DISTRIBUIDORA OFICIAL AMAKHA PARIS &middot; ENV&Iacute;OS A TODO EL PA&Iacute;S</div>
+<header>
+  <div class="hdr">
+    <div class="hdr-left">
+      <img class="hdr-logo" id="hdr-logo" src="" alt="Logo">
+      <div class="brand"><h1>RINC&Oacute;N PAR&Iacute;S</h1></div>
+    </div>
+    <div class="hdr-right">
+      <input id="search" type="text" placeholder="Buscar...">
+      <button id="cart-btn" onclick="openCart()">&#128717;<span class="badge-count" id="cart-count">0</span></button>
+    </div>
+  </div>
+</header>
+<div class="hero">
+  <img class="hero-logo" id="hero-logo" src="" alt="Logo">
+  <p class="hero-sub">Belleza &middot; Bienestar &middot; Elegancia</p>
+  <h2 class="hero-title">Tu ritual de belleza y bienestar</h2>
+  <p class="hero-desc">Perfumes Amakha Paris de alta fijaci&oacute;n, colecciones &aacute;rabes y kits exclusivos.</p>
+  <button class="hero-btn" onclick="scrollToCats()">VER CAT&Aacute;LOGO</button>
+</div>
+<div class="cats" id="cats"><div class="cats-inner" id="cats-inner"></div></div>
+<div id="catalog-wrap">
+  <div class="main">
+    <div class="sort-row">
+      <div><h3 id="cat-title">Todos los productos</h3><p id="cat-count"></p></div>
+      <select id="sort" onchange="renderGrid()">
+        <option value="">Ordenar por</option>
+        <option value="asc">Precio: menor a mayor</option>
+        <option value="desc">Precio: mayor a menor</option>
+        <option value="az">Nombre A-Z</option>
+      </select>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+<div id="consult-wrap" style="display:none">
+  <div class="consult-section">
+    <div class="consult-box">
+      <img class="consult-logo" id="consult-logo" src="" alt="Logo">
+      <h2>&iquest;Ten&eacute;s alguna consulta?</h2>
+      <p>Escrib&iacute;nos por WhatsApp y te respondemos a la brevedad.</p>
+      <a class="wa-cta" href="https://wa.me/59899503219?text=Hola!%20Consulta%20sobre%20Rincon%20Paris" target="_blank">&#128241; Escrib&iacute;nos por WhatsApp</a>
+      <p class="consult-num">&#127482;&#127486; (+598) 099 503 219</p>
+    </div>
+  </div>
+</div>
+<div class="footer-bar">
+  <div class="footer-bar-inner">
+    <div class="footer-item"><p>Env&iacute;os a todo el pa&iacute;s</p><p>R&aacute;pido y seguro</p></div>
+    <div class="footer-item"><p>Productos originales</p><p>Amakha Paris oficial</p></div>
+    <div class="footer-item"><p>2 formas de pago</p><p>Transferencia o Mercado Pago</p></div>
+    <div class="footer-item"><p>Stock garantizado</p><p>Siempre disponible</p></div>
+  </div>
+</div>
+<footer>
+  <div class="foot-inner"><img class="foot-logo" id="foot-logo" src="" alt="Logo"><p class="foot-name">RINC&Oacute;N PAR&Iacute;S</p></div>
+  <small>DISTRIBUIDORA OFICIAL AMAKHA PARIS &middot; &copy; 2026</small>
+</footer>
+<a class="wa-float" href="https://wa.me/59899503219?text=Hola!%20Consulta%20sobre%20Rincon%20Paris" target="_blank">&#128241;</a>
+<!-- Drawer overlay -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drw-head">
+    <div><h2>Mi Carrito</h2><p id="drw-sub" style="color:#999;font-family:Jost,sans-serif;font-size:12px"></p></div>
+    <button class="drw-close" onclick="closeCart()">&times;</button>
+  </div>
+  <div class="drw-body" id="drw-body"></div>
+  <div id="drw-foot" style="display:none" class="drw-foot">
+    <div class="drw-total"><span>Total</span><span class="amount" id="drw-total"></span></div>
+    <button class="go-btn" onclick="openCheckout()">Finalizar pedido</button>
+    <p class="ship-note">Env&iacute;os a todo el pa&iacute;s</p>
+  </div>
+</div>
+<!-- Checkout modal -->
+<div class="modal-wrap" id="co-modal">
+  <div class="modal">
+    <div class="modal-head"><h2>Finalizar Pedido</h2><button class="mclose" onclick="closeCheckout()">&times;</button></div>
+    <div id="co-body"></div>
+  </div>
+</div>
+<!-- Confirm modal -->
+<div class="modal-wrap" id="cf-modal">
+  <div class="modal" id="cf-body"></div>
+</div>
+<script>
 const IMGS = {
   "521_men": "data:image/jpeg;base64,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",
   "521_sexy_woman": "data:image/jpeg;base64,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",
@@ -60,686 +275,397 @@ const IMGS = {
 
 const LOGO = "data:image/jpeg;base64,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";
 
-const CATEGORIES = ["Todos", "Perfumes Femeninos", "Perfumes Masculinos", "Perfumes Árabes", "Body Splash", "Kits y Sets"];
 
-const PRODUCTS = [
-  { id:1, name:"521 Men", subtitle:"Insp. 212 Men NYC", cat:"Perfumes Masculinos", size:"15ml", price:12900, img:"521_men", badge:"" },
+var CATS = ["Todos","Perfumes Femeninos","Perfumes Masculinos","Perfumes Árabes","Body Splash","Kits y Sets"];
+var PRODUCTS = [
+  {id:1,name:"521 Men",subtitle:"Insp. 212 Men NYC",cat:"Perfumes Masculinos",size:"15ml",price:12900,img:"521_men",badge:""}
 ];
+var MESES = ["","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+var WA = "59899503219";
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwz0cUOXXfoElhRoCuBWuAe8CLRjX34lqifYivC6EvszHvotQN3-TBgWfWNqZV2TeHVEg/exec";
 
-const fmt = (n) => "$" + n.toLocaleString("es-AR");
-const WA = "59899503219";
+var cart = [];
+var currentCat = "Todos";
+var showConsultas = false;
+var fd = {name:"",phone:"",email:"",addr:"",date:"",horario:"",notes:"",delivery:"",pay:""};
 
-function Toast({ msg, onDone }) {
-  useEffect(function() { var t = setTimeout(onDone, 2600); return function() { clearTimeout(t); }; }, []);
-  return (
-    React.createElement('div', { style: { position:"fixed",bottom:24,right:80,zIndex:9999,background:"#1a1a1a",color:"#fff",
-      padding:"12px 20px",borderRadius:8,fontFamily:"Jost,sans-serif",fontSize:14,
-      boxShadow:"0 4px 20px rgba(0,0,0,.25)",borderLeft:"3px solid #b8860b" }}
-      , msg
-    )
-  );
+function fmt(n){ return "$" + n.toLocaleString("es-AR"); }
+function fmtDate(d){
+  if(!d) return "";
+  var p = d.split("-");
+  return p[2] + "/" + MESES[parseInt(p[1],10)] + "/" + p[0];
+}
+function qs(id){ return document.getElementById(id); }
+
+function init(){
+  qs("hdr-logo").src = LOGO;
+  qs("hero-logo").src = LOGO;
+  qs("foot-logo").src = LOGO;
+  qs("consult-logo").src = LOGO;
+  buildCats();
+  renderGrid();
+  qs("search").addEventListener("input", renderGrid);
+}
+window.addEventListener("load", init);
+
+function scrollToCats(){
+  qs("cats").scrollIntoView({behavior:"smooth"});
 }
 
-function Card({ p, onAdd }) {
-  const [hov, setHov] = useState(false);
-  return (
-    React.createElement('div', {
-      onMouseEnter: function() { setHov(true); },
-      onMouseLeave: function() { setHov(false); },
-      style: {
-        background:"#fff",borderRadius:12,overflow:"hidden",
-        border:"1px solid #f0e8dc",
-        boxShadow: hov ? "0 16px 40px rgba(0,0,0,.12)" : "0 2px 10px rgba(0,0,0,.06)",
-        transition:"all .3s",transform: hov ? "translateY(-5px)" : "none",
-        display:"flex",flexDirection:"column",position:"relative"
-      }}
-      , p.badge ? (
-        React.createElement('div', { style: { position:"absolute",top:10,left:10,zIndex:2,
-          background: p.badge==="ÁRABE" ? "#7a5c2e" : p.badge==="OFERTA" ? "#c0392b" : p.badge==="VIP" ? "#5a3e8a" : "#1a1a1a",
-          color:"#fff",fontSize:10,fontFamily:"Jost,sans-serif",fontWeight:700,
-          letterSpacing:1.5,padding:"3px 9px",borderRadius:4 }}
-          , p.badge
-        )
-      ) : null
-      , React.createElement('div', { style: { background:"#faf6f1",height:220,display:"flex",alignItems:"center",justifyContent:"center",overflow:"hidden" }}
-        , React.createElement('img', { src: IMGS[p.img], alt: p.name,
-          style: { maxWidth:"90%",maxHeight:"90%",objectFit:"contain",
-            transition:"transform .4s",transform: hov ? "scale(1.06)" : "scale(1)" }} )
-      )
-      , React.createElement('div', { style: { padding:"16px 16px 12px",flex:1,display:"flex",flexDirection:"column",gap:4 }}
-        , React.createElement('span', { style: { background:"#faf0e6",color:"#8B6914",fontSize:10,fontFamily:"Jost,sans-serif",
-          fontWeight:700,letterSpacing:1,textTransform:"uppercase",padding:"3px 8px",borderRadius:3,alignSelf:"flex-start" }}
-          , p.cat
-        )
-        , React.createElement('h3', { style: { color:"#1a1a1a",fontFamily:"Playfair Display,serif",fontSize:17,fontWeight:700,margin:"6px 0 0",lineHeight:1.3 }}, p.name)
-        , React.createElement('p', { style: { color:"#b8860b",fontFamily:"Jost,sans-serif",fontSize:12,margin:0,fontStyle:"italic" }}, p.subtitle)
-        , React.createElement('div', { style: { display:"flex",alignItems:"baseline",gap:8,marginTop:10 }}
-          , React.createElement('span', { style: { color:"#1a1a1a",fontFamily:"Playfair Display,serif",fontSize:20,fontWeight:700 }}, fmt(p.price))
-          , React.createElement('span', { style: { color:"#aaa",fontFamily:"Jost,sans-serif",fontSize:11 }}, p.size)
-        )
-      )
-      , React.createElement('div', { style: { padding:"0 16px 16px" }}
-        , React.createElement('button', {
-          onClick: function() { onAdd(p); },
-          style: {
-            width:"100%",padding:"10px 0",
-            background: hov ? "#1a1a1a" : "transparent",
-            color: hov ? "#fff" : "#1a1a1a",
-            border:"1.5px solid #1a1a1a",borderRadius:7,cursor:"pointer",
-            fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:12,
-            letterSpacing:1.5,textTransform:"uppercase",transition:"all .25s"
-          }}, "Agregar al carrito"
-
-        )
-      )
-    )
-  );
+function buildCats(){
+  var wrap = qs("cats-inner");
+  wrap.innerHTML = "";
+  CATS.forEach(function(c){
+    var b = document.createElement("button");
+    b.className = "cat-btn" + (currentCat===c&&!showConsultas?" active":"");
+    b.textContent = c;
+    b.addEventListener("click", function(){ setCat(c); });
+    wrap.appendChild(b);
+  });
+  var b2 = document.createElement("button");
+  b2.className = "cat-btn consult-tab" + (showConsultas?" active":"");
+  b2.innerHTML = "&#128172; Consultas";
+  b2.addEventListener("click", setConsultas);
+  wrap.appendChild(b2);
 }
 
-function CartDrawer({ cart, onClose, onQty, onRemove, onCheckout }) {
-  var total = cart.reduce(function(s,i) { return s + i.price * i.qty; }, 0);
-  var count = cart.reduce(function(s,i) { return s + i.qty; }, 0);
-  return (
-    React.createElement('div', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 73}}
-      , React.createElement('div', { onClick: onClose, style: { position:"fixed",inset:0,background:"rgba(0,0,0,.35)",zIndex:800 }} )
-      , React.createElement('div', { style: { position:"fixed",top:0,right:0,width:340,height:"100vh",background:"#fff",
-        zIndex:900,display:"flex",flexDirection:"column",boxShadow:"-4px 0 30px rgba(0,0,0,.12)" }}
-        , React.createElement('div', { style: { padding:"20px 22px",borderBottom:"1px solid #f0e8dc",display:"flex",justifyContent:"space-between",alignItems:"center" }}
-          , React.createElement('div', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 78}}
-            , React.createElement('h2', { style: { fontFamily:"Playfair Display,serif",fontSize:21,color:"#1a1a1a",margin:0 }}, "Mi Carrito" )
-            , React.createElement('p', { style: { color:"#999",fontFamily:"Jost,sans-serif",fontSize:12,margin:0 }}, count, " item" , count !== 1 ? "s" : "")
-          )
-          , React.createElement('button', { onClick: onClose, style: { background:"none",border:"none",fontSize:22,cursor:"pointer",color:"#999" }}, "×")
-        )
-        , React.createElement('div', { style: { flex:1,overflowY:"auto",padding:"14px 22px",WebkitOverflowScrolling:"touch" }}
-          , cart.length === 0 ? (
-            React.createElement('div', { style: { textAlign:"center",marginTop:60,color:"#ccc",fontFamily:"Jost,sans-serif",fontSize:14 }}, "Tu carrito está vacío"
-
-            )
-          ) : cart.map(function(item) { return (
-            React.createElement('div', { key: item.id, style: { display:"flex",gap:10,marginBottom:14,paddingBottom:14,borderBottom:"1px solid #f5f0ea",alignItems:"center" }}
-              , React.createElement('div', { style: { width:52,height:52,borderRadius:8,background:"#faf6f1",overflow:"hidden",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center" }}
-                , React.createElement('img', { src: IMGS[item.img], alt: "", style: { maxWidth:"90%",maxHeight:"90%",objectFit:"contain" }} )
-              )
-              , React.createElement('div', { style: { flex:1,minWidth:0 }}
-                , React.createElement('p', { style: { color:"#1a1a1a",fontFamily:"Playfair Display,serif",fontSize:13,margin:"0 0 2px",whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis" }}, item.name)
-                , React.createElement('p', { style: { color:"#b8860b",fontFamily:"Jost,sans-serif",fontSize:12,margin:0 }}, fmt(item.price))
-              )
-              , React.createElement('div', { style: { display:"flex",alignItems:"center",gap:5,flexShrink:0 }}
-                , React.createElement('button', { onClick: function() { onQty(item.id,-1); }, style: { background:"#f5f0ea",border:"none",color:"#555",width:26,height:26,borderRadius:4,cursor:"pointer",fontSize:16,padding:0 }}, "−")
-                , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontSize:13,minWidth:18,textAlign:"center" }}, item.qty)
-                , React.createElement('button', { onClick: function() { onQty(item.id,1); }, style: { background:"#f5f0ea",border:"none",color:"#555",width:26,height:26,borderRadius:4,cursor:"pointer",fontSize:16,padding:0 }}, "+")
-                , React.createElement('button', { onClick: function() { onRemove(item.id); }, style: { background:"#f5f0ea",border:"none",color:"#e74c3c",width:26,height:26,borderRadius:4,cursor:"pointer",fontSize:18,padding:0,marginLeft:4 }}, "×")
-              )
-            )
-          ); })
-        )
-        , cart.length > 0 ? (
-          React.createElement('div', { style: { padding:"18px 22px",borderTop:"1px solid #f0e8dc" }}
-            , React.createElement('div', { style: { display:"flex",justifyContent:"space-between",marginBottom:14,alignItems:"center" }}
-              , React.createElement('span', { style: { color:"#555",fontFamily:"Jost,sans-serif" }}, "Total")
-              , React.createElement('span', { style: { color:"#1a1a1a",fontFamily:"Playfair Display,serif",fontSize:22,fontWeight:700 }}, fmt(total))
-            )
-            , React.createElement('button', { onClick: onCheckout, style: { width:"100%",padding:"13px",background:"#1a1a1a",color:"#fff",border:"none",borderRadius:8,cursor:"pointer",fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:13,letterSpacing:2,textTransform:"uppercase" }}, "Finalizar pedido"
-
-            )
-            , React.createElement('p', { style: { textAlign:"center",color:"#bbb",fontSize:11,fontFamily:"Jost,sans-serif",marginTop:8 }}, "Envíos a todo el país"    )
-          )
-        ) : null
-      )
-    )
-  );
+function setCat(c){
+  currentCat = c;
+  showConsultas = false;
+  qs("catalog-wrap").style.display = "";
+  qs("consult-wrap").style.display = "none";
+  buildCats();
+  renderGrid();
 }
 
-function Checkout({ cart, onClose, onSuccess }) {
-  const [f, setF] = useState({ name:"", phone:"", email:"", address:"", deliveryDate:"", horario:"", notes:"" });
-  const [payMethod, setPayMethod] = useState(null);
-  const [delivery, setDelivery] = useState(null);
-  const [confirmed, setConfirmed] = useState(false);
-
-  var total = cart.reduce(function(s,i) { return s + i.price * i.qty; }, 0);
-  var ENVIO_GRATIS = 4000;
-  var envioExtra = (delivery === "envio" && total < ENVIO_GRATIS) ? 170 : 0;
-  var mpComision = payMethod === "mp" ? Math.round((total + envioExtra) * 0.0499) : 0;
-  var totalFinal = total + envioExtra + mpComision;
-  var phoneDigits = f.phone.replace(/[^0-9]/g,"").length;
-  var phoneValid = phoneDigits >= 8 && phoneDigits <= 9;
-
-  var meses = ["","Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-  var fmtDate = function(d) {
-    if (!d) return "";
-    var p = d.split("-");
-    return p[2] + "/" + meses[parseInt(p[1])] + "/" + p[0];
-  };
-
-  var inp = { width:"100%",background:"#faf6f1",border:"1.5px solid #e8ddd0",borderRadius:7,padding:"10px 13px",color:"#1a1a1a",fontFamily:"Jost,sans-serif",fontSize:14,outline:"none",boxSizing:"border-box" };
-  var lbl = { color:"#888",fontFamily:"Jost,sans-serif",fontSize:11,letterSpacing:1,textTransform:"uppercase",display:"block",marginBottom:5 };
-  var selBtn = function(active) { return { flex:1,padding:"14px 8px",borderRadius:10,cursor:"pointer",textAlign:"center",border: active ? "2px solid #5a7a3a" : "1.5px solid #e8ddd0",background: active ? "#eef4e8" : "#faf6f1",transition:"all .2s" }; };
-  var dash = { borderTop:"1px dashed #c0d8a8",margin:"10px 0" };
-
-  var submit = function() {
-    if (!f.name) { alert("Completá tu nombre."); return; }
-    if (!phoneValid) { alert("El teléfono debe tener entre 8 y 9 dígitos."); return; }
-    if (f.email && (!f.email.includes("@") || !f.email.includes("."))) { alert("El email no es válido."); return; }
-    if (!delivery) { alert("Selección una opción de entrega."); return; }
-    if (delivery === "envio" && !f.address) { alert("Ingresá tu dirección."); return; }
-    if (delivery === "envio" && !f.deliveryDate) { alert("Selección una fecha."); return; }
-    if (delivery === "envio" && !f.horario) { alert("Selección un horario."); return; }
-    if (!payMethod) { alert("Selección un método de pago."); return; }
-    if (payMethod === "mp") {
-      window.open("https://link.mercadopago.com.uy/cristinagodasi", "_blank");
-    }
-    var nl = "%0A";
-    var msg = "NUEVO PEDIDO - RINCON PARIS" + nl + nl;
-    msg += "RESUMEN" + nl;
-    cart.forEach(function(i) { msg += "- " + i.name + " x" + i.qty + " $" + (i.price*i.qty).toLocaleString("es-AR") + nl; });
-    if (delivery === "envio" && envioExtra > 0) msg += "- Envio Uruguay $" + envioExtra + nl;
-    if (delivery === "envio" && envioExtra === 0) msg += "- Envio Uruguay GRATIS" + nl;
-    if (payMethod === "mp" && mpComision > 0) msg += "- Comision MP $" + mpComision.toLocaleString("es-AR") + nl;
-    msg += "TOTAL: $" + totalFinal.toLocaleString("es-AR") + nl + nl;
-    msg += "PAGO: " + (payMethod === "transfer" ? "Transferencia Bancaria" : "Mercado Pago") + nl + nl;
-    if (delivery === "pickup") {
-      msg += "RETIRO PICK UP" + nl;
-      msg += "Eloisa Garcia Etchegoyhen De Lorenzo 2026, Malvin, Montevideo" + nl + nl;
-    } else {
-      msg += "ENVIO URUGUAY" + nl;
-      msg += "Direccion: " + f.address + nl;
-      msg += "Fecha: " + fmtDate(f.deliveryDate) + nl;
-      msg += "Horario: " + (f.horario === "manana" ? "Manana" : "Tarde") + nl + nl;
-    }
-    msg += "CLIENTE" + nl;
-    msg += "Nombre: " + f.name + nl;
-    msg += "Tel: +598 " + f.phone + nl;
-    if (f.email) msg += "Email: " + f.email + nl;
-    if (f.notes) msg += "Notas: " + f.notes + nl;
-    window.open("https://wa.me/" + WA + "?text=" + msg, "_blank");
-
-    // Guardar pedido en Google Sheets
-    var productos = cart.map(function(i) { return i.name + " x" + i.qty; }).join(", ");
-    var fechaHoy = new Date().toLocaleDateString("es-UY");
-    var params = "app=paris";
-    params += "&fecha=" + encodeURIComponent(fechaHoy);
-    params += "&nombre=" + encodeURIComponent(f.name);
-    params += "&telefono=" + encodeURIComponent(f.phone);
-    params += "&email=" + encodeURIComponent(f.email || "");
-    params += "&entrega=" + encodeURIComponent(delivery === "pickup" ? "Pick Up" : "Envio Uruguay");
-    params += "&direccion=" + encodeURIComponent(f.address || "Pick Up - Eloisa Garcia Etchegoyhen 2026");
-    params += "&fechaEntrega=" + encodeURIComponent(fmtDate(f.deliveryDate) || "");
-    params += "&horario=" + encodeURIComponent(f.horario === "manana" ? "Manana" : f.horario === "tarde" ? "Tarde" : "");
-    params += "&pago=" + encodeURIComponent(payMethod === "transfer" ? "Transferencia Bancaria" : "Mercado Pago");
-    params += "&productos=" + encodeURIComponent(productos);
-    params += "&total=" + encodeURIComponent("$" + totalFinal.toLocaleString("es-AR"));
-    params += "&notas=" + encodeURIComponent(f.notes || "");
-    fetch("https://script.google.com/macros/s/AKfycbwz0cUOXXfoElhRoCuBWuAe8CLRjX34lqifYivC6EvszHvotQN3-TBgWfWNqZV2TeHVEg/exec?" + params).catch(function() {});
-
-    setConfirmed(true);
-  };
-
-  if (confirmed) return (
-    React.createElement('div', { style: { position:"fixed",inset:0,background:"rgba(0,0,0,.5)",zIndex:2000,display:"flex",alignItems:"flex-start",justifyContent:"center",padding:20,overflowY:"auto",WebkitOverflowScrolling:"touch" }}
-      , React.createElement('div', { style: { background:"#fff",borderRadius:14,padding:24,width:"100%",maxWidth:440,textAlign:"center",marginTop:20 }}
-        , React.createElement('div', { style: { display:"flex",justifyContent:"center",marginBottom:16 }}
-          , React.createElement('img', { src: LOGO, alt: "Rincón París" , style: { width:130,height:130,borderRadius:"50%",objectFit:"cover",border:"3px solid #1a1a1a",boxShadow:"0 4px 24px rgba(0,0,0,.25)" }} )
-        )
-        , React.createElement('h2', { style: { fontFamily:"Playfair Display,serif",fontSize:24,color:"#1a1a1a",textAlign:"center",margin:"0 0 20px" }}, "!Pedido confirmado!" )
-        , React.createElement('div', { style: { background:"#faf6f1",borderRadius:12,padding:16,marginBottom:12,textAlign:"left" }}
-          , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:11,color:"#b8860b",textTransform:"uppercase",letterSpacing:1,margin:"0 0 10px" }}, "RESUMEN DEL PEDIDO"  )
-          , cart.map(function(i) { return (
-            React.createElement('div', { key: i.id, style: { display:"flex",justifyContent:"space-between",marginBottom:5 }}
-              , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#555" }}, i.name, " x" , i.qty)
-              , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#b8860b",fontWeight:600 }}, fmt(i.price*i.qty))
-            )
-          ); })
-          , delivery === "envio" ? (
-            React.createElement('div', { style: { display:"flex",justifyContent:"space-between",marginBottom:5 }}
-              , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#555" }}, "Envío Uruguay" )
-              , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontSize:13,fontWeight:600,color: envioExtra===0 ? "#5a7a3a" : "#b8860b" }}
-                , envioExtra === 0 ? "GRATIS" : "$170"
-              )
-            )
-          ) : null
-          , payMethod === "mp" && mpComision > 0 ? (
-            React.createElement('div', { style: { display:"flex",justifyContent:"space-between",marginBottom:5 }}
-              , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#555" }}, "Comisión MP (4,99%)"  )
-              , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#888" }}, "+$", mpComision.toLocaleString("es-AR"))
-            )
-          ) : null
-          , React.createElement('div', { style: { borderTop:"1px solid #e8ddd0",marginTop:8,paddingTop:8,display:"flex",justifyContent:"space-between" }}
-            , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:14,color:"#1a1a1a" }}, "Total")
-            , React.createElement('span', { style: { fontFamily:"Playfair Display,serif",fontSize:18,fontWeight:700,color:"#1a1a1a" }}, fmt(totalFinal))
-          )
-        )
-        , React.createElement('div', { style: { background:"#faf6f1",borderRadius:12,padding:16,marginBottom:12,textAlign:"left" }}
-          , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:11,color:"#b8860b",textTransform:"uppercase",letterSpacing:1,margin:"0 0 8px" }}, "💳 FORMA DE PAGO"   )
-          , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:0 }}
-            , payMethod === "transfer" ? React.createElement('span', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 245}}, "🏦 Transferencia Bancaria"  ) : React.createElement('span', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 245}}, "💳 Mercado Pago"  )
-          )
-          , payMethod === "mp" ? (
-            React.createElement('div', { style: { marginTop:8,borderTop:"1px dashed #e8ddd0",paddingTop:8 }}
-              , React.createElement('a', { href: "https://link.mercadopago.com.uy/cristinagodasi", target: "_blank", rel: "noopener noreferrer" ,
-                style: { color:"#b8860b",fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:13 }}, "🔗 mercadopago.com.uy"
-
-              )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:11,color:"#888",margin:"6px 0 0",fontStyle:"italic" }}, "El total ya incluye la comisión de MP 4,99%."        )
-            )
-          ) : null
-          , payMethod === "transfer" ? (
-            React.createElement('div', { style: { marginTop:10,borderTop:"1px dashed #e8ddd0",paddingTop:10 }}
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#555",margin:"0 0 8px" }}, "👤 Titular: "  , React.createElement('strong', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 258}}, "Cristina González" ))
-              , React.createElement('div', { style: { borderTop:"1px dashed #e8ddd0",margin:"8px 0" }} )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:12,color:"#1a1a1a",margin:"0 0 4px" }}, "🏦 Dentro de Santander"   )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#555",margin:"0 0 2px" }}, "Cuenta: " , React.createElement('strong', { style: { color:"#b8860b" }}, "7001242940"))
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#555",margin:"0 0 2px" }}, "Moneda: UYU" )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#555",margin:"0 0 8px" }}, "Sucursal: 04 - Ciudad Vieja - Cerrito"      )
-              , React.createElement('div', { style: { borderTop:"1px dashed #e8ddd0",margin:"8px 0" }} )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:12,color:"#1a1a1a",margin:"0 0 4px" }}, "🏦 Desde otros bancos"   )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#555",margin:"0 0 2px" }}, "Cuenta: " , React.createElement('strong', { style: { color:"#b8860b" }}, "0004007001242940"))
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#555",margin:"0 0 10px" }}, "Moneda: UYU" )
-              , React.createElement('div', { style: { borderTop:"1px dashed #e8ddd0",paddingTop:8 }}
-                , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#555",margin:0,lineHeight:1.6 }}, "📱 Una vez realizada la transferencia, enviá el comprobante por WhatsApp al "
-                              , React.createElement('strong', { style: { color:"#b8860b" }}, "099 503 219"  ), " para confirmar tu pedido. Sin el comprobante, el pedido no quedará registrado. ✅"
-                )
-              )
-            )
-          ) : null
-        )
-        , delivery === "pickup" ? (
-          React.createElement('div', { style: { background:"#eef4e8",borderRadius:12,padding:16,border:"1px solid #c0d8a8",marginBottom:16,textAlign:"left" }}
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:14,color:"#1a1a1a",margin:"0 0 8px" }}, "🏠 Retiro - Pick Up"    )
-            , React.createElement('div', { style: dash} )
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:"0 0 6px" }}, "📍 Eloísa García Etchegoyhen De Lorenzo 2026, Malvín, Montevideo"        )
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:0,lineHeight:1.6 }}, "📱 Te avisaremos por WhatsApp cuando tu pedido esté listo para retirar. 🛍"            )
-            , React.createElement('div', { style: dash} )
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:"0 0 4px" }}, "👤 " , f.name)
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:"0 0 4px" }}, "📱 " , f.phone)
-            , f.email ? React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:0 }}, "💌 " , f.email) : null
-            , f.notes ? (
-              React.createElement('div', { style: { borderTop:"1px dashed #c0d8a8",marginTop:10,paddingTop:10 }}
-                , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:0 }}
-                  , React.createElement('strong', { style: { color:"#5a7a3a" }}, "📝 Notas:" ), " " , f.notes
-                )
-              )
-            ) : null
-          )
-        ) : null
-        , delivery === "envio" ? (
-          React.createElement('div', { style: { background:"#eef4e8",borderRadius:12,padding:16,border:"1px solid #c0d8a8",marginBottom:16,textAlign:"left" }}
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:14,color:"#1a1a1a",margin:"0 0 8px" }}, "🚚 Envío Uruguay 🇺🇾"   )
-            , React.createElement('div', { style: dash} )
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:"0 0 4px" }}, "👤 " , f.name)
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:"0 0 4px" }}, "📱 " , f.phone)
-            , f.email ? React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:"0 0 0" }}, "💌 " , f.email) : null
-            , React.createElement('div', { style: dash} )
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:"0 0 5px" }}, "📍 " , f.address)
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:"0 0 5px" }}, "📅 " , fmtDate(f.deliveryDate))
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:"0 0 6px" }}, "🕐 " , f.horario === "manana" ? "Mañana" : "Tarde")
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin: f.notes ? "0 0 0" : 0,lineHeight:1.6 }}, "📱 Te avisaremos por WhatsApp cuando tu pedido esté en camino. 🛍"           )
-            , f.notes ? (
-              React.createElement('div', { style: { borderTop:"1px dashed #c0d8a8",marginTop:10,paddingTop:10 }}
-                , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#444",margin:0 }}
-                  , React.createElement('strong', { style: { color:"#5a7a3a" }}, "📝 Notas:" ), " " , f.notes
-                )
-              )
-            ) : null
-          )
-        ) : null
-        , React.createElement('button', { onClick: onSuccess, style: { width:"100%",padding:"13px",background:"#1a1a1a",color:"#fff",border:"none",borderRadius:8,cursor:"pointer",fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:13,letterSpacing:2,textTransform:"uppercase" }}, "Cerrar"
-
-        )
-      )
-    )
-  );
-
-  return (
-    React.createElement('div', { style: { position:"fixed",inset:0,background:"rgba(0,0,0,.5)",zIndex:2000,display:"flex",alignItems:"flex-start",justifyContent:"center",padding:20,overflowY:"auto",WebkitOverflowScrolling:"touch" }}
-      , React.createElement('div', { style: { background:"#fff",borderRadius:14,padding:24,width:"100%",maxWidth:480,marginTop:10 }}
-        , React.createElement('div', { style: { display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16 }}
-          , React.createElement('h2', { style: { fontFamily:"Playfair Display,serif",fontSize:20,color:"#1a1a1a",margin:0 }}, "Finalizar Pedido" )
-          , React.createElement('button', { onClick: onClose, style: { background:"none",border:"none",fontSize:22,cursor:"pointer",color:"#999" }}, "×")
-        )
-        , React.createElement('div', { style: { background:"#faf6f1",borderRadius:10,padding:14,marginBottom:18 }}
-          , cart.map(function(i) { return (
-            React.createElement('div', { key: i.id, style: { display:"flex",justifyContent:"space-between",marginBottom:4 }}
-              , React.createElement('span', { style: { color:"#555",fontFamily:"Jost,sans-serif",fontSize:13 }}, i.name, " x" , i.qty)
-              , React.createElement('span', { style: { color:"#b8860b",fontFamily:"Jost,sans-serif",fontSize:13,fontWeight:600 }}, fmt(i.price*i.qty))
-            )
-          ); })
-          , delivery === "envio" ? (
-            React.createElement('div', { style: { display:"flex",justifyContent:"space-between",marginTop:4 }}
-              , React.createElement('span', { style: { color:"#888",fontFamily:"Jost,sans-serif",fontSize:12 }}, "Envío Uruguay" )
-              , envioExtra > 0
-                ? React.createElement('span', { style: { color:"#b8860b",fontFamily:"Jost,sans-serif",fontSize:12,fontWeight:600 }}, "+$170")
-                : React.createElement('span', { style: { color:"#5a7a3a",fontFamily:"Jost,sans-serif",fontSize:13,fontWeight:700 }}, "GRATIS")
-              
-            )
-          ) : null
-          , payMethod === "mp" && mpComision > 0 ? (
-            React.createElement('div', { style: { display:"flex",justifyContent:"space-between",marginTop:4 }}
-              , React.createElement('span', { style: { color:"#888",fontFamily:"Jost,sans-serif",fontSize:12 }}, "Comisión MP (4,99%)"  )
-              , React.createElement('span', { style: { color:"#888",fontFamily:"Jost,sans-serif",fontSize:12 }}, "+$", mpComision.toLocaleString("es-AR"))
-            )
-          ) : null
-          , React.createElement('div', { style: { borderTop:"1px solid #e8ddd0",marginTop:8,paddingTop:8,display:"flex",justifyContent:"space-between" }}
-            , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,color:"#1a1a1a" }}, "Total")
-            , React.createElement('span', { style: { fontFamily:"Playfair Display,serif",fontSize:18,fontWeight:700,color:"#1a1a1a" }}, fmt(totalFinal))
-          )
-        )
-        , React.createElement('div', { style: { marginBottom:12 }}
-          , React.createElement('label', { style: lbl}, "👤 Nombre completo *"   )
-          , React.createElement('input', { type: "text", value: f.name, onChange: function(e) { setF(Object.assign({},f,{name:e.target.value})); }, style: inp, placeholder: "Tu nombre" } )
-        )
-        , React.createElement('div', { style: { marginBottom:12 }}
-          , React.createElement('label', { style: lbl}, "📱 Teléfono / WhatsApp *"    )
-          , React.createElement('div', { style: { display:"flex" }}
-            , React.createElement('div', { style: { background:"#f0ece6",border:"1.5px solid #e8ddd0",borderRight:"none",borderRadius:"7px 0 0 7px",padding:"10px 12px",fontFamily:"Jost,sans-serif",fontSize:14,color:"#555",display:"flex",alignItems:"center",whiteSpace:"nowrap",flexShrink:0 }}, "🇺🇾 (+598)"
-
-            )
-            , React.createElement('input', { type: "tel", value: f.phone,
-              onChange: function(e) {
-                var v = e.target.value.replace(/[^0-9 ]/g,"");
-                if (v.replace(/[^0-9]/g,"").length <= 9) setF(Object.assign({},f,{phone:v}));
-              },
-              placeholder: "099 123 456"  ,
-              style: Object.assign({},inp,{borderRadius:"0 7px 7px 0",borderLeft:"none",flex:1})}
-            )
-          )
-        )
-        , React.createElement('div', { style: { marginBottom:18 }}
-          , React.createElement('label', { style: lbl}, "💌 Email" )
-          , React.createElement('input', { type: "email", value: f.email, onChange: function(e) { setF(Object.assign({},f,{email:e.target.value})); }, style: inp} )
-        )
-        , React.createElement('div', { style: { marginBottom:16 }}
-          , React.createElement('label', { style: Object.assign({},lbl,{marginBottom:10})}, "¿Cómo lo recibís? *"   )
-          , React.createElement('div', { style: { display:"flex",gap:10,marginBottom:12 }}
-            , React.createElement('button', { onClick: function() { setDelivery("pickup"); }, style: selBtn(delivery==="pickup")}
-              , React.createElement('div', { style: { fontSize:26,marginBottom:6 }}, "🏠")
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:13,color:"#1a1a1a",margin:"0 0 3px" }}, "Pick Up" )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#5a8a5a",fontWeight:600,margin:0 }}, "Sin costo" )
-            )
-            , React.createElement('button', { onClick: function() { setDelivery("envio"); }, style: selBtn(delivery==="envio")}
-              , React.createElement('div', { style: { fontSize:26,marginBottom:6 }}, "🚚")
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:13,color:"#1a1a1a",margin:"0 0 3px" }}, "Envío Uruguay 🇺🇾"  )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#b8860b",fontWeight:700,margin:"0 0 2px" }}, "+ $170" )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:10,color:"#999",margin:0 }}, "*Gratis en compras +$4.000"   )
-            )
-          )
-          , delivery === "pickup" ? (
-            React.createElement('div', { style: { background:"#eef4e8",borderRadius:8,padding:"8px 12px",border:"1px solid #c0d8a8",marginBottom:4 }}
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#3a6a2a",margin:0 }}, "📍 Eloísa García Etchegoyhen De Lorenzo 2026, Malvín, Montevideo"        )
-            )
-          ) : null
-          , delivery === "envio" ? (
-            React.createElement('div', { style: { marginBottom:4 }}
-              , React.createElement('div', { style: { marginBottom:12 }}
-                , React.createElement('label', { style: lbl}, "📍 Dirección *"  )
-                , React.createElement('input', { type: "text", value: f.address, onChange: function(e) { setF(Object.assign({},f,{address:e.target.value})); }, style: inp, placeholder: "Ej: Rivera 1234, Pocitos, Montevideo"    } )
-                , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:11,color:"#aaa",marginTop:4 }}, "Calle, número y barrio en Uruguay"     )
-              )
-              , React.createElement('div', { style: { marginBottom:12 }}
-                , React.createElement('label', { style: lbl}, "📅 Fecha de entrega *"    )
-                , React.createElement('input', { type: "date", value: f.deliveryDate||"",
-                  onChange: function(e) { setF(Object.assign({},f,{deliveryDate:e.target.value})); },
-                  style: Object.assign({},inp,{width:"auto",minWidth:180,cursor:"pointer"}),
-                  min: new Date(Date.now()+86400000).toISOString().split("T")[0]}
-                )
-              )
-              , React.createElement('div', { style: { marginBottom:10 }}
-                , React.createElement('label', { style: lbl}, "🕐 Horario *"  )
-                , React.createElement('div', { style: { display:"flex",gap:10 }}
-                  , React.createElement('button', { onClick: function() { setF(Object.assign({},f,{horario:"manana"})); },
-                    style: Object.assign({},selBtn(f.horario==="manana"),{display:"flex",alignItems:"center",justifyContent:"center",gap:8,padding:"10px"})}
-                    , React.createElement('span', { style: { fontSize:18 }}, "🌅")
-                    , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontWeight:600,fontSize:13,color:"#1a1a1a" }}, "Mañana")
-                  )
-                  , React.createElement('button', { onClick: function() { setF(Object.assign({},f,{horario:"tarde"})); },
-                    style: Object.assign({},selBtn(f.horario==="tarde"),{display:"flex",alignItems:"center",justifyContent:"center",gap:8,padding:"10px"})}
-                    , React.createElement('span', { style: { fontSize:18 }}, "🌇")
-                    , React.createElement('span', { style: { fontFamily:"Jost,sans-serif",fontWeight:600,fontSize:13,color:"#1a1a1a" }}, "Tarde")
-                  )
-                )
-              )
-            )
-          ) : null
-        )
-        , React.createElement('div', { style: { marginBottom:18 }}
-          , React.createElement('label', { style: Object.assign({},lbl,{marginBottom:10})}, "Método de pago *"   )
-          , React.createElement('div', { style: { display:"flex",gap:10,marginBottom:12 }}
-            , React.createElement('button', { onClick: function() { setPayMethod("transfer"); }, style: selBtn(payMethod==="transfer")}
-              , React.createElement('div', { style: { fontSize:22,marginBottom:4 }}, "🏦")
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:12,color:"#1a1a1a",margin:0,lineHeight:1.4 }}, "Transferencia", React.createElement('br', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 439}}), "Bancaria")
-            )
-            , React.createElement('button', { onClick: function() { setPayMethod("mp"); }, style: selBtn(payMethod==="mp")}
-              , React.createElement('div', { style: { fontSize:22,marginBottom:4 }}, "💳")
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:12,color:"#1a1a1a",margin:"0 0 2px" }}, "Mercado Pago" )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:10,color:"#888",margin:0 }}, "Comisión 4,99%" )
-            )
-          )
-          , payMethod === "transfer" ? (
-            React.createElement('div', { style: { background:"#fffde8",borderRadius:12,padding:16,border:"1px solid #e8ddb0" }}
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#555",margin:"0 0 8px" }}, "👤 Titular: "  , React.createElement('strong', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 449}}, "Cristina González" ))
-              , React.createElement('div', { style: { borderTop:"1px dashed #d4c870",margin:"8px 0" }} )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:13,color:"#1a1a1a",margin:"0 0 6px" }}, "🏦 Dentro de Santander"   )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#555",margin:"0 0 3px" }}, "Cuenta: " , React.createElement('strong', { style: { color:"#b8860b" }}, "7001242940"))
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#555",margin:"0 0 3px" }}, "Moneda: UYU" )
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#555",margin:"0 0 12px" }}, "Sucursal: 04 - Ciudad Vieja - Cerrito"      )
-              , React.createElement('div', { style: { borderTop:"1px dashed #d4c870",paddingTop:12,marginBottom:12 }}
-                , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:13,color:"#1a1a1a",margin:"0 0 6px" }}, "🏦 Desde otros bancos"   )
-                , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#555",margin:"0 0 3px" }}, "Cuenta: " , React.createElement('strong', { style: { color:"#b8860b" }}, "0004007001242940"))
-                , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#555",margin:0 }}, "Moneda: UYU" )
-              )
-              , React.createElement('div', { style: { borderTop:"1px dashed #d4c870",paddingTop:10 }}
-                , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#555",margin:0,lineHeight:1.6 }}, "📱 Una vez realizada la transferencia, enviá el comprobante por WhatsApp al "
-                              , React.createElement('strong', { style: { color:"#b8860b" }}, "099 503 219"  ), " para confirmar tu pedido. Sin el comprobante, el pedido no quedará registrado. ✅"
-                )
-              )
-            )
-          ) : null
-          , payMethod === "mp" ? (
-            React.createElement('div', { style: { background:"#fffde8",borderRadius:12,padding:16,border:"1px solid #e8ddb0" }}
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#555",marginBottom:10 }}, "💳 Pagar por Mercado Pago:"    )
-              , React.createElement('a', { href: "https://link.mercadopago.com.uy/cristinagodasi", target: "_blank", rel: "noopener noreferrer" ,
-                style: { color:"#b8860b",fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:14,textDecoration:"none",display:"block",marginBottom:12 }}, "🔗 mercadopago.com.uy"
-
-              )
-              , React.createElement('div', { style: { borderTop:"1px dashed #d4c870",paddingTop:10 }}
-                , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:12,color:"#888",margin:0,fontStyle:"italic" }}, "El total ya incluye la comisión de MP 4,99%."        )
-              )
-            )
-          ) : null
-        )
-        , React.createElement('div', { style: { marginBottom:18 }}
-          , React.createElement('label', { style: lbl}, "Notas adicionales (opcional)"  )
-          , React.createElement('textarea', { value: f.notes, onChange: function(e) { setF(Object.assign({},f,{notes:e.target.value})); },
-            rows: 3, placeholder: "Preferencia de horario, indicaciones especiales..."    ,
-            style: Object.assign({},inp,{resize:"none"})} )
-        )
-        , React.createElement('div', { style: { display:"flex",gap:10 }}
-          , React.createElement('button', { onClick: onClose, style: { flex:1,padding:"12px",background:"transparent",border:"1.5px solid #ddd",color:"#888",borderRadius:8,cursor:"pointer",fontFamily:"Jost,sans-serif",fontWeight:600 }}, "Cancelar")
-          , React.createElement('button', { onClick: submit, style: { flex:2,padding:"12px",background:"#1a1a1a",color:"#fff",border:"none",borderRadius:8,cursor:"pointer",fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:13,letterSpacing:2,textTransform:"uppercase" }}, "Confirmar pedido" )
-        )
-      )
-    )
-  );
+function setConsultas(){
+  showConsultas = true;
+  qs("catalog-wrap").style.display = "none";
+  qs("consult-wrap").style.display = "";
+  buildCats();
 }
 
-function App() {
-  const products = PRODUCTS;
-  const [cat, setCat] = useState("Todos");
-  const [showConsultas, setShowConsultas] = useState(false);
-  const [search, setSearch] = useState("");
-  const [sort, setSort] = useState("default");
-  const [cart, setCart] = useState([]);
-  const [cartOpen, setCartOpen] = useState(false);
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
+function renderGrid(){
+  var q = qs("search").value.toLowerCase();
+  var s = qs("sort").value;
+  var list = PRODUCTS.filter(function(p){
+    return (currentCat==="Todos"||p.cat===currentCat) && (p.name+p.subtitle).toLowerCase().indexOf(q)>=0;
+  });
+  if(s==="asc") list.sort(function(a,b){return a.price-b.price;});
+  else if(s==="desc") list.sort(function(a,b){return b.price-a.price;});
+  else if(s==="az") list.sort(function(a,b){return a.name.localeCompare(b.name);});
+  qs("cat-title").textContent = currentCat==="Todos"?"Todos los productos":currentCat;
+  qs("cat-count").textContent = list.length + " producto" + (list.length!==1?"s":"");
+  var g = qs("grid");
+  if(!list.length){
+    g.innerHTML = "<div style='text-align:center;padding:60px 0;color:#bbb;font-family:Playfair Display,serif;font-size:20px'>No se encontraron productos</div>";
+    return;
+  }
+  g.innerHTML = "";
+  list.forEach(function(p){
+    var card = document.createElement("div");
+    card.className = "card";
+    var bc = p.badge==="ÁRABE"?"#7a5c2e":p.badge==="OFERTA"?"#c0392b":p.badge==="VIP"?"#5a3e8a":"#1a1a1a";
+    card.innerHTML = (p.badge?"<div class='card-badge' style='background:"+bc+"'>"+p.badge+"</div>":"") +
+      "<div class='card-img'><img src='"+IMGS[p.img]+"' alt='"+p.name+"' loading='lazy'></div>" +
+      "<div class='card-body'><span class='card-cat'>"+p.cat+"</span><h3 class='card-name'>"+p.name+"</h3><p class='card-sub'>"+p.subtitle+"</p><div class='card-price'><span class='price'>"+fmt(p.price)+"</span><span class='size'>"+p.size+"</span></div></div>" +
+      "<div class='card-foot'><button class='add-btn'>Agregar al carrito</button></div>";
+    card.querySelector(".add-btn").addEventListener("click", function(){ addToCart(p.id); });
+    g.appendChild(card);
+  });
+}
 
-  var filtered = products
-    .filter(function(p) { return (cat==="Todos"||p.cat===cat) && !showConsultas && (p.name+p.subtitle).toLowerCase().includes(search.toLowerCase()); })
-    .sort(function(a,b) { return sort==="price-asc"?a.price-b.price:sort==="price-desc"?b.price-a.price:sort==="name"?a.name.localeCompare(b.name):0; });
+function addToCart(id){
+  var p = PRODUCTS.find(function(x){return x.id===id;});
+  var ex = cart.find(function(x){return x.id===id;});
+  if(ex) ex.qty++;
+  else cart.push({id:p.id,name:p.name,price:p.price,img:p.img,qty:1});
+  updateCount();
+}
 
-  var addToCart = function(p) {
-    setCart(function(prev) {
-      var ex = prev.find(function(i) { return i.id===p.id; });
-      return ex ? prev.map(function(i) { return i.id===p.id ? Object.assign({},i,{qty:i.qty+1}) : i; }) : prev.concat([Object.assign({},p,{qty:1})]);
+function updateCount(){
+  var n = cart.reduce(function(s,i){return s+i.qty;},0);
+  var el = qs("cart-count");
+  if(n>0){
+    el.style.display = "inline";
+    el.textContent = n;
+  } else {
+    el.style.display = "none";
+  }
+}
+
+function openCart(){
+  qs("overlay").classList.add("open");
+  qs("drawer").classList.add("open");
+  renderDrawer();
+}
+function closeCart(){
+  qs("overlay").classList.remove("open");
+  qs("drawer").classList.remove("open");
+}
+
+function renderDrawer(){
+  var n = cart.reduce(function(s,i){return s+i.qty;},0);
+  var total = cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+  qs("drw-sub").textContent = n+" item"+(n!==1?"s":"");
+  var body = qs("drw-body");
+  var foot = qs("drw-foot");
+  if(!cart.length){
+    body.innerHTML = "<div class='drw-empty'>Tu carrito está vacío</div>";
+    foot.style.display="none";
+    return;
+  }
+  foot.style.display="";
+  qs("drw-total").textContent = fmt(total);
+  body.innerHTML = "";
+  cart.forEach(function(item){
+    var d = document.createElement("div");
+    d.className = "drw-item";
+    d.innerHTML = "<div class='drw-img'><img src='"+IMGS[item.img]+"' alt='"+item.name+"'></div>" +
+      "<div class='drw-info'><p>"+item.name+"</p><span>"+fmt(item.price)+"</span></div>" +
+      "<div class='drw-ctrl'>" +
+        "<button class='ctrl-btn' data-id='"+item.id+"' data-d='-1'>&#8722;</button>" +
+        "<span style='font-family:Jost,sans-serif;font-size:13px;min-width:18px;text-align:center'>"+item.qty+"</span>" +
+        "<button class='ctrl-btn' data-id='"+item.id+"' data-d='1'>&#43;</button>" +
+        "<button class='ctrl-btn ctrl-del' data-id='"+item.id+"' data-del='1' style='margin-left:4px'>&#215;</button>" +
+      "</div>";
+    d.querySelectorAll("[data-d]").forEach(function(btn){
+      btn.addEventListener("click",function(){ qtyItem(+btn.dataset.id,+btn.dataset.d); });
     });
-  };
-  var cartCount = cart.reduce(function(s,i) { return s+i.qty; }, 0);
-
-  return (
-    React.createElement('div', { style: { minHeight:"100vh",background:"#fdf9f5",fontFamily:"Jost,sans-serif" }}
-      , React.createElement('style', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 519}}, "@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Jost:wght@400;500;600;700&display=swap'); *{box-sizing:border-box;margin:0;padding:0} ::-webkit-scrollbar{width:5px} ::-webkit-scrollbar-track{background:#faf6f1} ::-webkit-scrollbar-thumb{background:#d4b896;border-radius:3px}")
-
-      , React.createElement('div', { style: { background:"#1a1a1a",color:"#d4b896",textAlign:"center",padding:"7px",fontFamily:"Jost,sans-serif",fontSize:11,letterSpacing:2 }}, "DISTRIBUIDORA OFICIAL AMAKHA PARIS · ENVÍOS A TODO EL PAÍS"
-
-      )
-
-      , React.createElement('header', { style: { background:"#fff",borderBottom:"1px solid #f0e8dc",position:"sticky",top:0,zIndex:200 }}
-        , React.createElement('div', { style: { maxWidth:1280,margin:"0 auto",padding:"0 16px",display:"flex",alignItems:"center",justifyContent:"space-between",height:64 }}
-          , React.createElement('div', { style: { display:"flex",alignItems:"center",gap:10 }}
-            , React.createElement('img', { src: LOGO, alt: "Logo", style: { width:44,height:44,borderRadius:"50%",objectFit:"cover",border:"2px solid #f0e8dc",flexShrink:0 }} )
-            , React.createElement('div', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 529}}
-              , React.createElement('h1', { style: { fontFamily:"Playfair Display,serif",fontSize:20,fontWeight:700,color:"#1a1a1a",letterSpacing:2,lineHeight:1 }}, "RINCÓN PARÍS" )
-
-            )
-          )
-          , React.createElement('div', { style: { display:"flex",gap:8,alignItems:"center" }}
-            , React.createElement('input', { placeholder: "Buscar...", value: search, onChange: function(e) { setSearch(e.target.value); },
-              style: { background:"#faf6f1",border:"1.5px solid #e8ddd0",borderRadius:7,padding:"7px 12px",color:"#1a1a1a",fontFamily:"Jost,sans-serif",fontSize:12,outline:"none",width:130 }} )
-            , React.createElement('button', { onClick: function() { setCartOpen(true); }, style: { background:"#1a1a1a",color:"#fff",border:"none",padding:"8px 14px",borderRadius:7,cursor:"pointer",fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:18,display:"flex",alignItems:"center",gap:6 }}, "🛍 "
-               , cartCount > 0 ? React.createElement('span', { style: { background:"#b8860b",color:"#fff",borderRadius:20,padding:"1px 7px",fontSize:11,fontWeight:700 }}, cartCount) : null
-            )
-          )
-        )
-      )
-
-      , React.createElement('div', { style: { background:"#0a0a0a",padding:"60px 24px 50px",position:"relative",overflow:"hidden" }}
-        , React.createElement('div', { style: { maxWidth:1280,margin:"0 auto",position:"relative",textAlign:"center" }}
-          , React.createElement('div', { style: { marginBottom:24 }}
-            , React.createElement('img', { src: LOGO, alt: "Rincón París" , style: { width:240,height:240,borderRadius:16,objectFit:"contain",background:"#0a0a0a",border:"none",boxShadow:"none" }} )
-          )
-          , React.createElement('p', { style: { color:"#b8860b",fontFamily:"Jost,sans-serif",fontSize:11,letterSpacing:5,textTransform:"uppercase",marginBottom:14 }}, "Belleza · Bienestar · Elegancia"    )
-          , React.createElement('h2', { style: { color:"#fff",fontFamily:"Playfair Display,serif",fontSize:28,fontWeight:700,lineHeight:1.3,marginBottom:12 }}, "Tu ritual de belleza y bienestar"
-
-          )
-          , React.createElement('p', { style: { color:"#aaa",fontFamily:"Jost,sans-serif",fontSize:14,maxWidth:420,margin:"0 auto 26px",lineHeight:1.8 }}, "Perfumes Amakha Paris de alta fijación, colecciones árabes y kits exclusivos."
-
-          )
-          , React.createElement('button', { onClick: function() { document.getElementById("cat").scrollIntoView({behavior:"smooth"}); },
-            style: { background:"#b8860b",color:"#fff",border:"none",padding:"13px 30px",borderRadius:8,cursor:"pointer",fontFamily:"Jost,sans-serif",fontWeight:700,fontSize:13,letterSpacing:2,textTransform:"uppercase" }}, "VER CATÁLOGO"
-
-          )
-        )
-      )
-
-      , React.createElement('div', { id: "cat", style: { background:"#fff",borderBottom:"1px solid #f0e8dc",overflowX:"auto" }}
-        , React.createElement('div', { style: { maxWidth:1280,margin:"0 auto",padding:"0 22px",display:"flex" }}
-          , CATEGORIES.map(function(c) { return (
-            React.createElement('button', { key: c, onClick: function() { setCat(c); setShowConsultas(false); },
-              style: { padding:"14px 14px",background:"transparent",border:"none",
-                borderBottom: cat===c && !showConsultas ? "2.5px solid #1a1a1a" : "2.5px solid transparent",
-                color: cat===c && !showConsultas ? "#1a1a1a" : "#888",
-                fontFamily:"Jost,sans-serif",fontWeight: cat===c && !showConsultas ? 700 : 400,fontSize:12,
-                cursor:"pointer",whiteSpace:"nowrap",letterSpacing:.5,transition:"color .2s" }}
-              , c
-            )
-          ); })
-          , React.createElement('button', { onClick: function() { setShowConsultas(true); },
-            style: { padding:"14px 14px",background:"transparent",border:"none",
-              borderBottom: showConsultas ? "2.5px solid #25D366" : "2.5px solid transparent",
-              color: showConsultas ? "#25D366" : "#888",
-              fontFamily:"Jost,sans-serif",fontWeight: showConsultas ? 700 : 400,fontSize:12,
-              cursor:"pointer",whiteSpace:"nowrap",letterSpacing:.5,transition:"color .2s" }}, "💬 Consultas"
-
-          )
-        )
-      )
-
-      , showConsultas ? (
-        React.createElement('div', { style: { maxWidth:700,margin:"40px auto",padding:"0 24px" }}
-          , React.createElement('div', { style: { background:"#fff",borderRadius:16,padding:"48px 32px",textAlign:"center",boxShadow:"0 4px 24px rgba(0,0,0,.07)",border:"1px solid #f0e8dc" }}
-            , React.createElement('div', { style: { marginBottom:16,display:"flex",justifyContent:"center" }}, React.createElement('img', { src: LOGO, alt: "Rincón París" , style: { width:90,height:90,borderRadius:"50%",objectFit:"cover",border:"2px solid #f0e8dc" }} ))
-            , React.createElement('h2', { style: { fontFamily:"Playfair Display,serif",fontSize:28,color:"#1a1a1a",margin:"0 0 12px" }}, "¿Tenés alguna consulta?"  )
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:15,color:"#777",lineHeight:1.8,maxWidth:380,margin:"0 auto 32px" }}, "Escribínos por WhatsApp y te respondemos a la brevedad."
-
-            )
-            , React.createElement('a', { href: "https://wa.me/59899503219?text=Hola!%20Tengo%20una%20consulta%20sobre%20productos%20de%20Rincon%20Paris",
-              target: "_blank", rel: "noopener noreferrer" ,
-              style: { display:"inline-flex",alignItems:"center",gap:10,background:"#25D366",color:"#fff",
-                padding:"16px 36px",borderRadius:10,fontFamily:"Jost,sans-serif",fontWeight:700,
-                fontSize:15,textDecoration:"none",letterSpacing:.5,
-                boxShadow:"0 4px 16px rgba(37,211,102,.35)" }}, "📱 Escribínos por WhatsApp"
-
-            )
-            , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontSize:13,color:"#aaa",marginTop:20 }}, "🇺🇾 (+598) 099 503 219"
-
-            )
-          )
-        )
-      ) : (
-        React.createElement('div', { style: { maxWidth:1280,margin:"0 auto",padding:"32px 22px" }}
-          , React.createElement('div', { style: { display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:24,flexWrap:"wrap",gap:10 }}
-            , React.createElement('div', {__self: this, __source: {fileName: _jsxFileName, lineNumber: 610}}
-              , React.createElement('h3', { style: { fontFamily:"Playfair Display,serif",fontSize:20,color:"#1a1a1a",margin:"0 0 2px" }}, cat==="Todos" ? "Todos los productos" : cat)
-              , React.createElement('p', { style: { color:"#999",fontFamily:"Jost,sans-serif",fontSize:12 }}, filtered.length, " producto" , filtered.length!==1?"s":"")
-            )
-            , React.createElement('select', { value: sort, onChange: function(e) { setSort(e.target.value); },
-              style: { background:"#fff",border:"1.5px solid #e8ddd0",borderRadius:7,padding:"8px 12px",color:"#666",fontFamily:"Jost,sans-serif",fontSize:12,outline:"none",cursor:"pointer" }}
-              , React.createElement('option', { value: "default"}, "Ordenar por" )
-              , React.createElement('option', { value: "price-asc"}, "Precio: menor a mayor"   )
-              , React.createElement('option', { value: "price-desc"}, "Precio: mayor a menor"   )
-              , React.createElement('option', { value: "name"}, "Nombre A-Z" )
-            )
-          )
-          , filtered.length === 0 ? (
-            React.createElement('div', { style: { textAlign:"center",padding:"60px 0",color:"#bbb",fontFamily:"Playfair Display,serif",fontSize:20 }}, "No se encontraron productos"   )
-          ) : (
-            React.createElement('div', { style: { display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(240px,1fr))",gap:20 }}
-              , filtered.map(function(p) { return React.createElement(Card, { key: p.id, p: p, onAdd: addToCart} ); })
-            )
-          )
-        )
-      )
-
-      , React.createElement('div', { style: { background:"#1a1a1a",padding:"28px 24px",marginTop:16 }}
-        , React.createElement('div', { style: { maxWidth:1280,margin:"0 auto",display:"flex",flexWrap:"wrap",justifyContent:"space-around",gap:20 }}
-          , [["Envíos a todo el país","Rápido y seguro"],["Productos originales","Amakha Paris oficial"],["2 formas de pago","Transferencia o Mercado Pago"],["Stock garantizado","Siempre disponible"]].map(function(item) { return (
-            React.createElement('div', { key: item[0], style: { textAlign:"center",color:"#fff" }}
-              , React.createElement('p', { style: { fontFamily:"Jost,sans-serif",fontWeight:600,fontSize:12,letterSpacing:.5,marginBottom:3 }}, item[0])
-              , React.createElement('p', { style: { color:"#777",fontFamily:"Jost,sans-serif",fontSize:11 }}, item[1])
-            )
-          ); })
-        )
-      )
-
-      , React.createElement('footer', { style: { background:"#111",padding:"24px",textAlign:"center" }}
-        , React.createElement('div', { style: { display:"flex",alignItems:"center",justifyContent:"center",gap:10,marginBottom:8 }}
-          , React.createElement('img', { src: LOGO, alt: "Rincón París" , style: { width:36,height:36,borderRadius:"50%",objectFit:"cover",opacity:.8 }} )
-          , React.createElement('p', { style: { fontFamily:"Playfair Display,serif",fontSize:16,color:"#d4b896",margin:0 }}, "RINCÓN PARÍS" )
-        )
-        , React.createElement('p', { style: { color:"#555",fontFamily:"Jost,sans-serif",fontSize:10,letterSpacing:2 }}, "DISTRIBUIDORA OFICIAL AMAKHA PARIS · © 2026"      )
-      )
-
-      , React.createElement('a', { href: "https://wa.me/59899503219?text=Hola!%20Tengo%20una%20consulta%20sobre%20productos%20de%20Rincon%20Paris",
-        target: "_blank", rel: "noopener noreferrer" ,
-        style: { position:"fixed",bottom:24,right:24,zIndex:500,background:"#25D366",color:"#fff",
-          width:56,height:56,borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",
-          boxShadow:"0 4px 20px rgba(37,211,102,.45)",fontSize:24,textDecoration:"none" }}, "📱"
-
-      )
-
-      , cartOpen ? React.createElement(CartDrawer, { cart: cart, onClose: function() { setCartOpen(false); }, onRemove: function(id) { setCart(function(prev) { return prev.filter(function(i) { return i.id!==id; }); }); }, onQty: function(id,d) { setCart(function(prev) { return prev.map(function(i) { return i.id===id ? Object.assign({},i,{qty:Math.max(1,i.qty+d)}) : i; }); }); }, onCheckout: function() { setCartOpen(false); setCheckoutOpen(true); }} ) : null
-      , checkoutOpen ? React.createElement(Checkout, { cart: cart, onClose: function() { setCheckoutOpen(false); }, onSuccess: function() { setCart([]); setCheckoutOpen(false); }} ) : null
-    )
-  );
+    d.querySelectorAll("[data-del]").forEach(function(btn){
+      btn.addEventListener("click",function(){ removeItem(+btn.dataset.id); });
+    });
+    body.appendChild(d);
+  });
 }
 
+function qtyItem(id,d){
+  var i=cart.find(function(x){return x.id===id;});
+  if(i) i.qty=Math.max(1,i.qty+d);
+  updateCount(); renderDrawer();
+}
+function removeItem(id){
+  cart=cart.filter(function(x){return x.id!==id;});
+  updateCount(); renderDrawer();
+}
 
-      document.getElementById("loading").style.display = "none";
-      createRoot(document.getElementById("root")).render(React.createElement(App));
-    } catch(e) {
-      document.getElementById("loading").style.display = "none";
-      document.getElementById("error").style.display = "flex";
-      document.getElementById("errmsg").textContent = "Error: " + e.message;
-    }
-  </script>
+function getCalc(){
+  var sub=cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+  var envio=(fd.delivery==="envio"&&sub<4000)?170:0;
+  var mp=fd.pay==="mp"?Math.round((sub+envio)*0.0499):0;
+  return {sub:sub,envio:envio,mp:mp,total:sub+envio+mp};
+}
+
+function openCheckout(){
+  closeCart();
+  qs("co-modal").classList.add("open");
+  renderForm();
+}
+function closeCheckout(){
+  qs("co-modal").classList.remove("open");
+}
+
+function renderForm(){
+  var c=getCalc();
+  var html="<div class='sum-box'>";
+  cart.forEach(function(i){
+    html+="<div class='sum-row'><span>"+i.name+" x"+i.qty+"</span><span>"+fmt(i.price*i.qty)+"</span></div>";
+  });
+  if(fd.delivery==="envio"){
+    html+="<div class='sum-row'><span>Envío Uruguay &#127482;&#127486;</span><span class='"+(c.envio===0?"sum-gratis":"")+"'>"+(c.envio===0?"GRATIS":"$170")+"</span></div>";
+  }
+  if(fd.pay==="mp"&&c.mp>0){
+    html+="<div class='sum-row'><span>Comisión MP (4,99%)</span><span style='color:#888'>+$"+c.mp.toLocaleString("es-AR")+"</span></div>";
+  }
+  html+="<div class='sum-total'><span>Total</span><span class='tot-amt'>"+fmt(c.total)+"</span></div></div>";
+
+  html+="<div class='fld'><label>&#128100; Nombre completo *</label><input type='text' id='f-name' value='"+fd.name+"' placeholder='Tu nombre'></div>";
+  html+="<div class='fld'><label>&#128241; Teléfono / WhatsApp *</label><div class='phone-row'><div class='phone-pfx'>&#127482;&#127486; (+598)</div><input type='tel' id='f-phone' class='phone-in' value='"+fd.phone+"' placeholder='099 123 456' maxlength='9'></div></div>";
+  html+="<div class='fld'><label>&#128140; Email</label><input type='email' id='f-email' value='"+fd.email+"'></div>";
+
+  html+="<div style='margin-bottom:16px'><label style='color:#888;font-family:Jost,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:10px'>¿Cómo lo recibís? *</label><div class='sel-row'>";
+  html+="<button class='sel-opt"+(fd.delivery==="pickup"?" on":"")+"' id='btn-pickup'><div class='ico'>&#127968;</div><div class='sname'>Pick Up</div><div class='ssub' style='color:#5a8a5a'>Sin costo</div></button>";
+  html+="<button class='sel-opt"+(fd.delivery==="envio"?" on":"")+"' id='btn-envio'><div class='ico'>&#128666;</div><div class='sname'>Envío Uruguay &#127482;&#127486;</div><div class='ssub'>+ $170</div><div class='snote'>*Gratis en compras +$4.000</div></button>";
+  html+="</div>";
+  if(fd.delivery==="pickup"){
+    html+="<div class='pickup-box'>&#128205; Eloísa García Etchegoyhen De Lorenzo 2026, Malvín, Montevideo</div>";
+  }
+  if(fd.delivery==="envio"){
+    html+="<div class='fld'><label>&#128205; Dirección *</label><input type='text' id='f-addr' value='"+fd.addr+"' placeholder='Ej: Rivera 1234, Pocitos, Montevideo'><p style='font-family:Jost,sans-serif;font-size:11px;color:#aaa;margin-top:4px'>Calle, número y barrio en Uruguay</p></div>";
+    html+="<div class='fld'><label>&#128197; Fecha de entrega *</label><input type='date' id='f-date' value='"+(fd.date||"")+"' min='"+new Date(Date.now()+86400000).toISOString().slice(0,10)+"' style='width:auto;min-width:180px;cursor:pointer;background:#faf6f1;border:1.5px solid #e8ddd0;border-radius:7px;padding:10px 13px;font-family:Jost,sans-serif;font-size:14px;outline:none'></div>";
+    html+="<div class='fld'><label>&#128336; Horario *</label><div class='sel-row'>";
+    html+="<button class='sel-opt"+(fd.horario==="manana"?" on":"")+"' id='btn-manana' style='display:flex;align-items:center;justify-content:center;gap:8px;padding:10px'>&#127749; <span style='font-family:Jost,sans-serif;font-weight:600;font-size:13px;color:#1a1a1a'>Mañana</span></button>";
+    html+="<button class='sel-opt"+(fd.horario==="tarde"?" on":"")+"' id='btn-tarde' style='display:flex;align-items:center;justify-content:center;gap:8px;padding:10px'>&#127751; <span style='font-family:Jost,sans-serif;font-weight:600;font-size:13px;color:#1a1a1a'>Tarde</span></button>";
+    html+="</div></div>";
+  }
+  html+="</div>";
+
+  html+="<div style='margin-bottom:18px'><label style='color:#888;font-family:Jost,sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:10px'>Método de pago *</label><div class='sel-row'>";
+  html+="<button class='sel-opt"+(fd.pay==="transfer"?" on":"")+"' id='btn-transfer'><div class='ico'>&#127974;</div><div class='sname'>Transferencia<br>Bancaria</div></button>";
+  html+="<button class='sel-opt"+(fd.pay==="mp"?" on":"")+"' id='btn-mp'><div class='ico'>&#128179;</div><div class='sname'>Mercado Pago</div><div style='font-family:Jost,sans-serif;font-size:10px;color:#888'>Comisión 4,99%</div></button>";
+  html+="</div>";
+  if(fd.pay==="transfer"){
+    html+="<div class='pay-box' style='padding-top:10px'>";
+    html+="<p class='pay-bold' style='margin-top:0'>&#127974; Dentro de Santander</p>";
+    html+="<p class='pay-line'>Cuenta: <strong>7001242940</strong></p>";
+    html+="<p class='pay-line'>Moneda: UYU</p>";
+    html+="<p class='pay-line'>Sucursal: 04 - Ciudad Vieja - Cerrito</p>";
+    html+="<div class='pdash'></div>";
+    html+="<p class='pay-bold'>&#127974; Desde otros bancos</p>";
+    html+="<p class='pay-line'>Cuenta: <strong>0004007001242940</strong></p>";
+    html+="<p class='pay-line'>Moneda: UYU</p>";
+    html+="<p class='pay-note'>&#128241; Una vez realizada la transferencia, enviá el comprobante por WhatsApp al <strong>099 503 219</strong> para confirmar tu pedido. Sin el comprobante, el pedido no quedará registrado. &#9989;</p>";
+    html+="</div>";
+  }
+  if(fd.pay==="mp"){
+    html+="<div class='pay-box'>";
+    html+="<p>&#128179; Pagar por Mercado Pago:</p>";
+    html+="<a href='https://link.mercadopago.com.uy/cristinagodasi' target='_blank'>&#128279; mercadopago.com.uy</a>";
+    html+="<div class='pdash'></div>";
+    html+="<p style='font-style:italic;color:#888;font-size:12px'>El total ya incluye la comisión de MP 4,99%.</p>";
+    html+="</div>";
+  }
+  html+="</div>";
+
+  html+="<div class='fld'><label>Notas adicionales (opcional)</label><textarea id='f-notes' rows='3' placeholder='Preferencia de horario, indicaciones especiales...'>"+fd.notes+"</textarea></div>";
+  html+="<div class='mfooter'><button class='cancel-btn' onclick='closeCheckout()'>Cancelar</button><button class='ok-btn' onclick='doConfirm()'>Confirmar pedido</button></div>";
+
+  qs("co-body").innerHTML = html;
+
+  // Bind events after render
+  function bindInput(id, key){ var el=qs(id); if(el) el.addEventListener("input",function(){ fd[key]=el.value; if(key==="delivery"||key==="pay") renderForm(); }); }
+  bindInput("f-name","name");
+  var ph=qs("f-phone");
+  if(ph) ph.addEventListener("input",function(){
+    var v=ph.value.replace(/[^0-9]/g,"").slice(0,9);
+    ph.value=v; fd.phone=v;
+  });
+  bindInput("f-email","email");
+  bindInput("f-addr","addr"); bindInput("f-date","date"); bindInput("f-notes","notes");
+
+  function bindSel(id, key, val){ var el=qs(id); if(el) el.addEventListener("click",function(){ fd[key]=val; renderForm(); }); }
+  bindSel("btn-pickup","delivery","pickup"); bindSel("btn-envio","delivery","envio");
+  bindSel("btn-manana","horario","manana"); bindSel("btn-tarde","horario","tarde");
+  bindSel("btn-transfer","pay","transfer"); bindSel("btn-mp","pay","mp");
+}
+
+function doConfirm(){
+  fd.name = (qs("f-name")||{}).value||fd.name;
+  fd.phone = (qs("f-phone")||{}).value||fd.phone;
+  fd.email = (qs("f-email")||{}).value||fd.email;
+  if(qs("f-addr")) fd.addr=(qs("f-addr")||{}).value||fd.addr;
+  if(qs("f-date")) fd.date=(qs("f-date")||{}).value||fd.date;
+  fd.notes=(qs("f-notes")||{}).value||fd.notes;
+
+  if(!fd.name){alert("Completá tu nombre.");return;}
+  var digs=fd.phone.replace(/[^0-9]/g,"").length;
+  if(digs<8||digs>9){alert("El teléfono debe tener entre 8 y 9 dígitos.");return;}
+  if(fd.email&&(!fd.email.includes("@")||!fd.email.includes("."))){alert("El email no es válido.");return;}
+  if(!fd.delivery){alert("Selección una opción de entrega.");return;}
+  if(fd.delivery==="envio"&&!fd.addr){alert("Ingresá tu dirección.");return;}
+  if(fd.delivery==="envio"&&!fd.date){alert("Selección una fecha.");return;}
+  if(fd.delivery==="envio"&&!fd.horario){alert("Selección un horario.");return;}
+  if(!fd.pay){alert("Selección un método de pago.");return;}
+
+  var c=getCalc();
+  if(fd.pay==="mp") window.open("https://link.mercadopago.com.uy/cristinagodasi","_blank");
+
+  var nl="%0A",msg="NUEVO PEDIDO - RINCON PARIS"+nl+nl+"RESUMEN"+nl;
+  cart.forEach(function(i){msg+="- "+i.name+" x"+i.qty+" $"+(i.price*i.qty).toLocaleString("es-AR")+nl;});
+  if(fd.delivery==="envio"&&c.envio>0) msg+="- Envio Uruguay $"+c.envio+nl;
+  if(fd.delivery==="envio"&&c.envio===0) msg+="- Envio Uruguay GRATIS"+nl;
+  if(fd.pay==="mp"&&c.mp>0) msg+="- Comision MP $"+c.mp.toLocaleString("es-AR")+nl;
+  msg+="TOTAL: $"+c.total.toLocaleString("es-AR")+nl+nl;
+  msg+="PAGO: "+(fd.pay==="transfer"?"Transferencia Bancaria":"Mercado Pago")+nl+nl;
+  if(fd.delivery==="pickup") msg+="RETIRO PICK UP"+nl+"Eloisa Garcia Etchegoyhen De Lorenzo 2026, Malvin, Montevideo"+nl+nl;
+  else msg+="ENVIO URUGUAY"+nl+"Direccion: "+fd.addr+nl+"Fecha: "+fmtDate(fd.date)+nl+"Horario: "+(fd.horario==="manana"?"Manana":"Tarde")+nl+nl;
+  msg+="CLIENTE"+nl+"Nombre: "+fd.name+nl+"Tel: +598 "+fd.phone+nl;
+  if(fd.email) msg+="Email: "+fd.email+nl;
+  if(fd.notes) msg+="Notas: "+fd.notes+nl;
+  window.open("https://wa.me/"+WA+"?text="+msg,"_blank");
+
+  var params="app=paris&fecha="+encodeURIComponent(new Date().toLocaleDateString("es-UY"));
+  params+="&nombre="+encodeURIComponent(fd.name)+"&telefono="+encodeURIComponent(fd.phone);
+  params+="&email="+encodeURIComponent(fd.email||"")+"&entrega="+encodeURIComponent(fd.delivery==="pickup"?"Pick Up":"Envio Uruguay");
+  params+="&direccion="+encodeURIComponent(fd.addr||"Pick Up")+"&fechaEntrega="+encodeURIComponent(fmtDate(fd.date)||"");
+  params+="&horario="+encodeURIComponent(fd.horario==="manana"?"Manana":"Tarde");
+  params+="&pago="+encodeURIComponent(fd.pay==="transfer"?"Transferencia":"Mercado Pago");
+  params+="&productos="+encodeURIComponent(cart.map(function(i){return i.name+" x"+i.qty;}).join(", "));
+  params+="&total="+encodeURIComponent("$"+c.total.toLocaleString("es-AR"))+"&notas="+encodeURIComponent(fd.notes||"");
+  fetch(SCRIPT_URL+"?"+params).catch(function(){});
+
+  closeCheckout();
+  showConf(c);
+}
+
+function showConf(c){
+  var html="<img class='conf-logo' src='"+LOGO+"' alt='Logo'>";
+  html+="<h2 class='conf-title'>¡Pedido confirmado!</h2>";
+  html+="<div class='ibox'><div class='ibox-title'>RESUMEN DEL PEDIDO</div>";
+  cart.forEach(function(i){html+="<div class='ibox-row'><span>"+i.name+" x"+i.qty+"</span><span>"+fmt(i.price*i.qty)+"</span></div>";});
+  if(fd.delivery==="envio") html+="<div class='ibox-row'><span>Envío Uruguay</span><span style='color:"+(c.envio===0?"#5a7a3a":"#b8860b")+"'>"+(c.envio===0?"GRATIS":"$170")+"</span></div>";
+  if(fd.pay==="mp"&&c.mp>0) html+="<div class='ibox-row'><span>Comisión MP (4,99%)</span><span style='color:#888'>+$"+c.mp.toLocaleString("es-AR")+"</span></div>";
+  html+="<div class='ibox-total'><span>Total</span><span>"+fmt(c.total)+"</span></div></div>";
+
+  html+="<div class='ibox'><div class='ibox-title'>&#128179; FORMA DE PAGO</div>";
+  html+="<p style='font-family:Jost,sans-serif;font-size:13px;color:#444;margin:0'>"+(fd.pay==="transfer"?"&#127974; Transferencia Bancaria":"&#128179; Mercado Pago")+"</p>";
+  if(fd.pay==="mp"){
+    html+="<div style='margin-top:8px;border-top:1px dashed #e8ddd0;padding-top:8px'>";
+    html+="<a href='https://link.mercadopago.com.uy/cristinagodasi' target='_blank' style='color:#b8860b;font-weight:700;font-size:13px'>&#128279; mercadopago.com.uy</a>";
+    html+="<p style='font-family:Jost,sans-serif;font-size:11px;color:#888;margin:6px 0 0;font-style:italic'>El total ya incluye la comisión de MP 4,99%.</p></div>";
+  }
+  if(fd.pay==="transfer"){
+    html+="<div style='margin-top:10px;border-top:1px dashed #e8ddd0;padding-top:10px'>";
+    html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:8px'>&#128100; Titular: <strong>Cristina González</strong></p>";
+    html+="<div style='border-top:1px dashed #e8ddd0;margin:8px 0'></div>";
+    html+="<p style='font-family:Jost,sans-serif;font-weight:700;font-size:12px;color:#1a1a1a;margin-bottom:4px'>&#127974; Dentro de Santander</p>";
+    html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:2px'>Cuenta: <strong style='color:#b8860b'>7001242940</strong></p>";
+    html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:2px'>Moneda: UYU</p>";
+    html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:10px'>Sucursal: 04 - Ciudad Vieja - Cerrito</p>";
+    html+="<div style='border-top:1px dashed #e8ddd0;margin-bottom:8px'></div>";
+    html+="<p style='font-family:Jost,sans-serif;font-weight:700;font-size:12px;color:#1a1a1a;margin-bottom:4px'>&#127974; Desde otros bancos</p>";
+    html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:2px'>Cuenta: <strong style='color:#b8860b'>0004007001242940</strong></p>";
+    html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:10px'>Moneda: UYU</p>";
+    html+="<div style='border-top:1px dashed #e8ddd0;padding-top:8px'><p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin:0;line-height:1.6'>&#128241; Una vez realizada la transferencia, enviá el comprobante por WhatsApp al <strong style='color:#b8860b'>099 503 219</strong> para confirmar tu pedido. Sin el comprobante, el pedido no quedará registrado. &#9989;</p></div>";
+    html+="</div>";
+  }
+  html+="</div>";
+
+  if(fd.delivery==="pickup"){
+    html+="<div class='gbox'><div class='gbox-title'>&#127968; Retiro - Pick Up</div><div class='gdash'></div>";
+    html+="<p class='gline'>&#128205; Eloísa García Etchegoyhen De Lorenzo 2026, Malvín, Montevideo</p>";
+    html+="<p class='gline'>&#128241; Te avisaremos por WhatsApp cuando tu pedido esté listo para retirar. &#128717;</p>";
+    html+="<div class='gdash'></div>";
+    html+="<p class='gline'>&#128100; "+fd.name+"</p>";
+    html+="<p class='gline'>&#128241; "+fd.phone+"</p>";
+    if(fd.email) html+="<p class='gline'>&#128140; "+fd.email+"</p>";
+    if(fd.notes) html+="<div class='gdash'></div><p class='gline'><strong style='color:#5a7a3a'>&#128221; Notas:</strong> "+fd.notes+"</p>";
+    html+="</div>";
+  } else {
+    html+="<div class='gbox'><div class='gbox-title'>&#128666; Envío Uruguay &#127482;&#127486;</div><div class='gdash'></div>";
+    html+="<p class='gline'>&#128100; "+fd.name+"</p>";
+    html+="<p class='gline'>&#128241; "+fd.phone+"</p>";
+    if(fd.email) html+="<p class='gline'>&#128140; "+fd.email+"</p>";
+    html+="<div class='gdash'></div>";
+    html+="<p class='gline'>&#128205; "+fd.addr+"</p>";
+    html+="<p class='gline'>&#128197; "+fmtDate(fd.date)+"</p>";
+    html+="<p class='gline'>&#128336; "+(fd.horario==="manana"?"Mañana":"Tarde")+"</p>";
+    html+="<p class='gline'>&#128241; Te avisaremos por WhatsApp cuando tu pedido esté en camino. &#128717;</p>";
+    if(fd.notes) html+="<div class='gdash'></div><p class='gline'><strong style='color:#5a7a3a'>&#128221; Notas:</strong> "+fd.notes+"</p>";
+    html+="</div>";
+  }
+  html+="<button class='close-btn' onclick='closeConf()'>CERRAR</button>";
+
+  qs("cf-body").innerHTML = html;
+  qs("cf-modal").classList.add("open");
+  cart=[];
+  fd={name:"",phone:"",email:"",addr:"",date:"",horario:"",notes:"",delivery:"",pay:""};
+  updateCount();
+}
+
+function closeConf(){
+  qs("cf-modal").classList.remove("open");
+}
+</script>
 </body>
 </html>
