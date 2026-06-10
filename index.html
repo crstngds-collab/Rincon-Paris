@@ -506,15 +506,15 @@ function renderForm(){
   html+="</div>";
   if(fd.pay==="transfer"){
     html+="<div class='pay-box' style='padding-top:10px'>";
-    html+="<p class='pay-bold' style='margin-top:0'>&#127974; Dentro de Santander</p>";
+    html+="<p class='pay-bold' style='margin-top:0'>&#127974; Transferencias dentro de Santander</p>";
     html+="<p class='pay-line'>Cuenta: <strong>7001242940</strong></p>";
     html+="<p class='pay-line'>Moneda: UYU</p>";
     html+="<p class='pay-line'>Sucursal: 04 - Ciudad Vieja - Cerrito</p>";
     html+="<div class='pdash'></div>";
-    html+="<p class='pay-bold'>&#127974; Desde otros bancos</p>";
+    html+="<p class='pay-bold'>&#127974; Transferencias desde otros bancos</p>";
     html+="<p class='pay-line'>Cuenta: <strong>0004007001242940</strong></p>";
     html+="<p class='pay-line'>Moneda: UYU</p>";
-    html+="<p class='pay-note'>&#128241; Una vez realizada la transferencia, enviá el comprobante por WhatsApp al <strong>099 503 219</strong> para confirmar tu pedido. Sin el comprobante, el pedido no quedará registrado. &#9989;</p>";
+    html+="<p class='pay-note'>&#128242; Una vez realizada la transferencia, enviá el comprobante por WhatsApp al <strong>099 503 219</strong> para confirmar tu pedido. Sin el comprobante, el pedido no quedará registrado. &#9989;</p>";
     html+="</div>";
   }
   if(fd.pay==="mp"){
@@ -575,7 +575,7 @@ function doConfirm(){
   if(fd.delivery==="envio"&&c.envio===0) msg+="- Envio Uruguay GRATIS"+nl;
   if(fd.pay==="mp"&&c.mp>0) msg+="- Comision MP $"+c.mp.toLocaleString("es-AR")+nl;
   msg+="TOTAL: $"+c.total.toLocaleString("es-AR")+nl+nl;
-  msg+="PAGO: "+(fd.pay==="transfer"?"Transferencia Bancaria":"Mercado Pago")+nl+nl;
+  msg+="PAGO: "+(fd.pay==="transfer"?"Transferencia bancaria":"Mercado Pago")+nl+nl;
   if(fd.delivery==="pickup") msg+="RETIRO PICK UP"+nl+"Eloisa Garcia Etchegoyhen De Lorenzo 2026, Malvin, Montevideo"+nl+nl;
   else msg+="ENVIO URUGUAY"+nl+"Direccion: "+fd.addr+nl+"Fecha: "+fmtDate(fd.date)+nl+"Horario: "+(fd.horario==="manana"?"Manana":"Tarde")+nl+nl;
   msg+="CLIENTE"+nl+"Nombre: "+fd.name+nl+"Tel: +598 "+fd.phone+nl;
@@ -607,7 +607,7 @@ function showConf(c){
   html+="<div class='ibox-total'><span>Total</span><span>"+fmt(c.total)+"</span></div></div>";
 
   html+="<div class='ibox'><div class='ibox-title'>&#128179; FORMA DE PAGO</div>";
-  html+="<p style='font-family:Jost,sans-serif;font-size:13px;color:#444;margin:0'>"+(fd.pay==="transfer"?"&#127974; Transferencia Bancaria":"&#128179; Mercado Pago")+"</p>";
+  html+="<p style='font-family:Jost,sans-serif;font-size:13px;color:#444;margin:0'>"+(fd.pay==="transfer"?"&#127974; Transferencia bancaria":"&#128179; Mercado Pago")+"</p>";
   if(fd.pay==="mp"){
     html+="<div style='margin-top:8px;border-top:1px dashed #c8b8a2;padding-top:8px'>";
     html+="<a href='https://link.mercadopago.com.uy/cristinagodasi' target='_blank' style='color:#b8860b;font-weight:700;font-size:13px;text-decoration:none'>&#128279; mercadopago.com.uy</a>";
@@ -617,15 +617,15 @@ function showConf(c){
     html+="<div style='margin-top:10px;border-top:1px dashed #c8b8a2;padding-top:10px'>";
     html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:8px'>&#128100; Titular: <strong>Cristina González</strong></p>";
     html+="<div style='border-top:1px dashed #c8b8a2;margin:8px 0'></div>";
-    html+="<p style='font-family:Jost,sans-serif;font-weight:700;font-size:12px;color:#1a1a1a;margin-bottom:4px'>&#127974; Dentro de Santander</p>";
+    html+="<p style='font-family:Jost,sans-serif;font-weight:700;font-size:12px;color:#1a1a1a;margin-bottom:4px'>&#127974; Transferencias dentro de Santander</p>";
     html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:2px'>Cuenta: <strong style='color:#b8860b'>7001242940</strong></p>";
     html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:2px'>Moneda: UYU</p>";
     html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:10px'>Sucursal: 04 - Ciudad Vieja - Cerrito</p>";
     html+="<div style='border-top:1px dashed #c8b8a2;margin-bottom:8px'></div>";
-    html+="<p style='font-family:Jost,sans-serif;font-weight:700;font-size:12px;color:#1a1a1a;margin-bottom:4px'>&#127974; Desde otros bancos</p>";
+    html+="<p style='font-family:Jost,sans-serif;font-weight:700;font-size:12px;color:#1a1a1a;margin-bottom:4px'>&#127974; Transferencias desde otros bancos</p>";
     html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:2px'>Cuenta: <strong style='color:#b8860b'>0004007001242940</strong></p>";
     html+="<p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin-bottom:10px'>Moneda: UYU</p>";
-    html+="<div style='border-top:1px dashed #c8b8a2;padding-top:8px'><p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin:0;line-height:1.6'>&#128241; Una vez realizada la transferencia, enviá el comprobante por WhatsApp al <strong style='color:#b8860b'>099 503 219</strong> para confirmar tu pedido. Sin el comprobante, el pedido no quedará registrado. &#9989;</p></div>";
+    html+="<div style='border-top:1px dashed #c8b8a2;padding-top:8px'><p style='font-family:Jost,sans-serif;font-size:12px;color:#555;margin:0;line-height:1.6'>&#128242; Una vez realizada la transferencia, enviá el comprobante por WhatsApp al <strong style='color:#b8860b'>099 503 219</strong> para confirmar tu pedido. Sin el comprobante, el pedido no quedará registrado. &#9989;</p></div>";
     html+="</div>";
   }
   html+="</div>";
@@ -633,7 +633,7 @@ function showConf(c){
   if(fd.delivery==="pickup"){
     html+="<div class='gbox'><div class='gbox-title'>&#127969; Retiro - Pick Up</div><div class='gdash'></div>";
     html+="<p class='gline'>&#128205; Eloísa García Etchegoyhen De Lorenzo 2026, Malvín, Montevideo</p>";
-    html+="<div class='gdash'></div><p class='gline'>&#128241; Te avisaremos por WhatsApp cuando tu pedido esté listo para retirar. &#128717;</p>";
+    html+="<div class='gdash'></div><p class='gline'>&#128242; Te avisamos por WhatsApp cuando tu pedido esté listo para retirar. &#128717;</p>";
     html+="<div class='gdash'></div>";
     html+="<p class='gline'>&#128100; "+fd.name+"</p>";
     html+="<p class='gline'>&#128241; "+fd.phone+"</p>";
@@ -642,7 +642,7 @@ function showConf(c){
     html+="</div>";
   } else {
     html+="<div class='gbox'><div class='gbox-title'>&#128666; Envío Uruguay &#127482;&#127486;</div><div class='gdash'></div>";
-    html+="<p class='gline'>&#128241; Te avisaremos por WhatsApp cuando tu pedido esté en camino. &#128717;</p>";
+    html+="<p class='gline'>&#128242; Te avisamos por WhatsApp cuando tu pedido esté en camino. &#128717;</p>";
     html+="<div class='gdash'></div>";
     html+="<p class='gline'>&#128205; "+fd.addr+"</p>";
     html+="<p class='gline'>&#128197; "+fmtDate(fd.date)+"</p>";
