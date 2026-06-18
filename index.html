@@ -701,7 +701,7 @@ function doConfirm(){
   if(fd.notes) msg+="Notas: "+fd.notes+nl;
   window.open("https://wa.me/"+WA+"?text="+msg,"_blank");
 
-  var params="app=paris&fecha="+encodeURIComponent(new Date().toLocaleDateString("es-UY"));
+  var params="app=paris&fecha="+encodeURIComponent(new Date().toLocaleString("es-UY"));
   params+="&nombre="+encodeURIComponent(fd.name)+"&telefono="+encodeURIComponent(fd.phone);
   params+="&email="+encodeURIComponent(fd.email||"-")+"&entrega="+encodeURIComponent(fd.delivery==="pickup"?"Pick Up":"Envio Uruguay");
   params+="&direccion="+encodeURIComponent(fd.delivery==="envio"?fd.addr:"-")+"&fechaEntrega="+encodeURIComponent(fd.delivery==="envio"?(fmtDate(fd.date)||"-"):"-");
